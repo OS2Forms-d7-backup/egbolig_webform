@@ -1,5 +1,6 @@
 name = Egbolig webform
 core = 7.x
+version = 7.x-1.0-beta1
 package = Features
 dependencies[] = drupal_nemid_login
 dependencies[] = strongarm
