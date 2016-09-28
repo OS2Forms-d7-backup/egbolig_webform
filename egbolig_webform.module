@@ -93,7 +93,7 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id,$cpr = null) 
         );
       }
 
-      $form['#submit'][] = 'egbolig_synch_submission';
+      $form['#submit'][] = 'egbolig_webform_synch_submission';
     }
   }
 }
