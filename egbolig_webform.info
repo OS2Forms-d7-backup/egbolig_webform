@@ -1,7 +1,7 @@
 name = Egbolig webform
 core = 7.x
 version = 7.x-1.0-beta1
-package = Features
+package = OS2Forms
 dependencies[] = accommodation
 dependencies[] = drupal_nemid_login
 dependencies[] = education
