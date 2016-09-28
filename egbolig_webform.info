@@ -1,0 +1,11 @@
+name = Egbolig webform
+core = 7.x
+package = Features
+dependencies[] = drupal_nemid_login
+dependencies[] = strongarm
+dependencies[] = webform
+dependencies[] = webform_bt_layout
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:1
+features[node_export_features][] = bfb030e6-716a-4168-9737-7764fab9a4e8
+features[variable][] = soap_webservice
