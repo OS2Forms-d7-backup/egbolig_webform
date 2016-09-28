@@ -93,38 +93,38 @@ function egbolig_webform_populate_member($member, $form_state) {
     $member->Email = DEFAULT_EMAIL;
     $member->Password = DEFAULT_PASSWORD;
     $member->OfferByEmail = DEFAULT_OFFER_BY_EMAIL;
-    $member->CprNo = $v[_egbolig_get_webform_cid($tree, 'cpr')];
+    $member->CprNo = $v[_egbolig_webform_get_webform_cid($tree, 'cpr')];
   }
-  $member->Name = $v[_egbolig_get_webform_cid($tree, 'name')];
-  $member->Address = $v[_egbolig_get_webform_cid($tree, 'addresse')];
-  $member->HomePhone = $v[_egbolig_get_webform_cid($tree, 'phone_nr')];
-  $member->CoAddress = $v[_egbolig_get_webform_cid($tree, 'c_o_addresse')];
-  $member->MobilePhone = $v[_egbolig_get_webform_cid($tree, 'telefonnummer_mobil')];
-  $member->PostalCodeCity = $v[_egbolig_get_webform_cid($tree, 'post_nr___by')];
+  $member->Name = $v[_egbolig_webform_get_webform_cid($tree, 'name')];
+  $member->Address = $v[_egbolig_webform_get_webform_cid($tree, 'addresse')];
+  $member->HomePhone = $v[_egbolig_webform_get_webform_cid($tree, 'phone_nr')];
+  $member->CoAddress = $v[_egbolig_webform_get_webform_cid($tree, 'c_o_addresse')];
+  $member->MobilePhone = $v[_egbolig_webform_get_webform_cid($tree, 'telefonnummer_mobil')];
+  $member->PostalCodeCity = $v[_egbolig_webform_get_webform_cid($tree, 'post_nr___by')];
   $member->Country = DEFAULT_COUNTRY;
-  $member->Adults = 1 + $v[_egbolig_get_webform_cid($tree, 'has_partner')][0];//with or without the partner
+  $member->Adults = 1 + $v[_egbolig_webform_get_webform_cid($tree, 'has_partner')][0];//with or without the partner
   $children = 0;
-  if ($v[_egbolig_get_webform_cid($tree, 'has_children')][0]) {//Børn over eller under 23 år i husstanden
-    if ($v[_egbolig_get_webform_cid($tree, 'child_cpr_nr')]
-        || $v[_egbolig_get_webform_cid($tree, 'cpr_nr')]
-        || $v[_egbolig_get_webform_cid($tree, 'child_birthday')]) {
+  if ($v[_egbolig_webform_get_webform_cid($tree, 'has_children')][0]) {//Børn over eller under 23 år i husstanden
+    if ($v[_egbolig_webform_get_webform_cid($tree, 'child_cpr_nr')]
+        || $v[_egbolig_webform_get_webform_cid($tree, 'cpr_nr')]
+        || $v[_egbolig_webform_get_webform_cid($tree, 'child_birthday')]) {
       $children++;
     }
     //counting adult child
-    // if ($v[_egbolig_get_webform_cid($tree, 'adult_cpr_nr')]
-    //     || $v[_egbolig_get_webform_cid($tree, 'adult_birthday')]) {
+    // if ($v[_egbolig_webform_get_webform_cid($tree, 'adult_cpr_nr')]
+    //     || $v[_egbolig_webform_get_webform_cid($tree, 'adult_birthday')]) {
     //       $children++;
     // }
   }
   $member->Children = $children;
-  $member->Education = $v[_egbolig_get_webform_cid($tree, 'education_name')];
-  $member->EducationStart = $v[_egbolig_get_webform_cid($tree, 'education_start_date')];
-  $member->EducationEnd = $v[_egbolig_get_webform_cid($tree, 'education_end_date')];
-  $member->EducationExpectedEnd = $v[_egbolig_get_webform_cid($tree, 'education_end_date')];
-  $member->EducationDocumentationReceived = ($v[_egbolig_get_webform_cid($tree, 'education_doc')] > 0);//TODO: not working with WS
-  $member->EducationalInstitution = $v[_egbolig_get_webform_cid($tree, 'institution_name')];
-  $member->MinimumRent = $v[_egbolig_get_webform_cid($tree, 'husleje_min')];
-  $member->MaximumRent = $v[_egbolig_get_webform_cid($tree, 'husleje_max')];
+  $member->Education = $v[_egbolig_webform_get_webform_cid($tree, 'education_name')];
+  $member->EducationStart = $v[_egbolig_webform_get_webform_cid($tree, 'education_start_date')];
+  $member->EducationEnd = $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')];
+  $member->EducationExpectedEnd = $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')];
+  $member->EducationDocumentationReceived = ($v[_egbolig_webform_get_webform_cid($tree, 'education_doc')] > 0);//TODO: not working with WS
+  $member->EducationalInstitution = $v[_egbolig_webform_get_webform_cid($tree, 'institution_name')];
+  $member->MinimumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_min')];
+  $member->MaximumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_max')];
   //$member->Pet TODO: fix the Pets list
 
   return $member;
@@ -210,13 +210,13 @@ function accommodation_types() {
   return $accommodationlist;
 }
 
-function _egbolig_get_webform_cid($tree, $form_key) {
+function _egbolig_webform_get_webform_cid($tree, $form_key) {
   foreach ($tree as $child) {
     if ($child['form_key'] === $form_key) {
       return $child['cid'];
     } else {
       if ($child['children']) {
-        $cid = _egbolig_get_webform_cid($child['children'], $form_key);
+        $cid = _egbolig_webform_get_webform_cid($child['children'], $form_key);
         if ($cid) {
           return $cid;
         }
