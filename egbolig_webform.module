@@ -13,12 +13,12 @@ module_load_include('inc', 'egbolig_webform', 'includes/egbolig_webform.webservi
  */
 function egbolig_webform_menu() {
   $items['admin/config/system/egbolig'] = array(
-    'title'            => t('Configure EGbolig'),
-    'description'      => t('Configure EGbolig settings'),
-    'page callback'    => 'drupal_get_form',
-    'page arguments'   => array('egbolig_webform_settings'),
+    'title' => t('Configure EGbolig'),
+    'description' => t('Configure EGbolig settings'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('egbolig_webform_settings'),
     'access arguments' => array('access administration pages'),
-    'type'             => MENU_NORMAL_ITEM,
+    'type' => MENU_NORMAL_ITEM,
   );
 
   return $items;
@@ -46,7 +46,10 @@ function egbolig_webform_get_previous_submission_message($form, $form_state) {
 
   $message = '';
   if ($member) {
-    $edit_link = l(t('Edit'), $base_root . $form['#action'], ['query' => ['cpr' => $cpr], 'attributes' => ['target'=>'_blank']]);
+    $edit_link = l(t('Edit'), $base_root . $form['#action'], [
+      'query' => ['cpr' => $cpr],
+      'attributes' => ['target' => '_blank']
+    ]);
     $message = "<p>Submission for $cpr exists. $edit_link / Delete it</p>";
   }
   $command = ajax_command_html('#js-previous-submission-message', $message);
@@ -54,7 +57,7 @@ function egbolig_webform_get_previous_submission_message($form, $form_state) {
   return array('#type' => 'ajax', '#commands' => [$command]);
 }
 
-function egbolig_webform_form_alter(&$form, &$form_state, $form_id,$cpr = null) {
+function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL) {
   //cannot fully use $form_id as it's dependent on node ID
   if (strpos($form_id, 'webform_client_form') > -1) {
     if ($form['#node']->type == 'webform' && $form['#node']->title == 'EG-Bolig ansøgningsskema') {
@@ -63,7 +66,7 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id,$cpr = null) 
         //TODO: add security check that this user can access this CPR submitted data
         $member = egbolig_webform_ws_get_member_by_cpr($cpr);
         if ($member) {
-          drupal_set_message(print_r($member,1));
+          drupal_set_message(print_r($member, 1));
           //saving for integrity
           $form_state['hashcode'] = md5($cpr);
 
@@ -80,7 +83,8 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id,$cpr = null) 
           $form['submitted']['row6']['col61']['additional_info']['row61']['col62']['husleje_min']['#default_value'] = $member->MinimumRent;
           $form['submitted']['row6']['col61']['additional_info']['row61']['col62']['husleje_max']['#default_value'] = $member->MaximumRent;
         }
-      } else {
+      }
+      else {
         $form['submitted']['row0']['col0']['previous_submission_message']['#prefix'] = '<div id="js-previous-submission-message">';
         $form['submitted']['row0']['col0']['previous_submission_message']['#suffix'] = '</div>';
 
@@ -111,12 +115,13 @@ function egbolig_webform_synch_submission($form, &$form_state) {
         egbolig_webform_ws_update_member($member);
 
         drupal_set_message('Submission synched');
-      } catch (Exception $e){
+      } catch (Exception $e) {
         watchdog('EGBolig Webservice', $e->getMessage(), array(), WATCHDOG_ERROR);
 
         drupal_set_message('Could not synch the submission, see log', 'warning');
       }
-    } else {
+    }
+    else {
       //TODO: abort submission
       drupal_set_message(t('Integrity of the form is broken'), 'error');
     }
@@ -124,7 +129,7 @@ function egbolig_webform_synch_submission($form, &$form_state) {
   // new submission
   else {
     try {
-      $member = egbolig_webform_populate_member(null, $form_state);
+      $member = egbolig_webform_populate_member(NULL, $form_state);
       egbolig_webform_ws_create_member($member);
 
       //getting the member and updating if with the
@@ -133,7 +138,7 @@ function egbolig_webform_synch_submission($form, &$form_state) {
       egbolig_webform_ws_update_member($member);
 
       drupal_set_message('Submission created');
-    } catch (Exception $e){
+    } catch (Exception $e) {
       watchdog('EGBolig Webservice', $e->getMessage(), array(), WATCHDOG_ERROR);
       drupal_set_message('Could not create the submission, see log', 'warning');
     }

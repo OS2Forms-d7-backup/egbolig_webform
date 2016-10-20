@@ -9,7 +9,7 @@
  */
 function egbolig_webform_node_export_features_default() {
   $node_export = array(
-  'code_string' => 'array(
+    'code_string' => 'array(
   (object) array(
       \'vid\' => \'4\',
       \'uid\' => \'1\',
@@ -2941,6 +2941,6 @@ function egbolig_webform_node_export_features_default() {
       \'node_export_drupal_version\' => \'7\',
     ),
 )',
-);
+  );
   return $node_export;
 }

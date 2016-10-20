@@ -19,7 +19,7 @@ define('DEFAULT_TYPE_CREATE', 'A');
 function egbolig_webform_ws_get_member_by_cpr($cpr) {
   $client = new SoapClient(variable_get('soap_webservice'));
   $response = $client->MemberGetListByCprNo(
-    array (
+    array(
       'cprNo' => $cpr
     )
   );
@@ -27,7 +27,7 @@ function egbolig_webform_ws_get_member_by_cpr($cpr) {
   if (!empty((array) $result)) {
     return $result->Member;
   }
-  return null;
+  return NULL;
 }
 
 /**
@@ -56,9 +56,9 @@ function egbolig_webform_ws_create_member($member) {
 }
 
 /**
-  * Updates the member via the webservice.
-  * Internally calls _egbolig_ws_update_education
-  */
+ * Updates the member via the webservice.
+ * Internally calls _egbolig_ws_update_education
+ */
 function egbolig_webform_ws_update_member($member) {
   $member->Type = DEFAULT_TYPE_UPDATE;
   $member_array = (array) $member;
@@ -68,7 +68,7 @@ function egbolig_webform_ws_update_member($member) {
   $client = new SoapClient(variable_get('soap_webservice'));
 
   $response = $client->MemberUpdate(
-    array (
+    array(
       'member' => $member_array,
     )
   );
@@ -87,7 +87,7 @@ function egbolig_webform_populate_member($member, $form_state) {
   $tree = $form_state['webform']['component_tree']['children'];
 
   //check if member is empty, create a new member and populate some default fields
-  if ($member == null) {
+  if ($member == NULL) {
     $member = new stdClass();
     //TODO: check default fields
     $member->Email = DEFAULT_EMAIL;
@@ -102,12 +102,13 @@ function egbolig_webform_populate_member($member, $form_state) {
   $member->MobilePhone = $v[_egbolig_webform_get_webform_cid($tree, 'telefonnummer_mobil')];
   $member->PostalCodeCity = $v[_egbolig_webform_get_webform_cid($tree, 'post_nr___by')];
   $member->Country = DEFAULT_COUNTRY;
-  $member->Adults = 1 + $v[_egbolig_webform_get_webform_cid($tree, 'has_partner')][0];//with or without the partner
+  $member->Adults = 1 + $v[_egbolig_webform_get_webform_cid($tree, 'has_partner')][0]; //with or without the partner
   $children = 0;
-  if ($v[_egbolig_webform_get_webform_cid($tree, 'has_children')][0]) {//Børn over eller under 23 år i husstanden
+  if ($v[_egbolig_webform_get_webform_cid($tree, 'has_children')][0]) { //Børn over eller under 23 år i husstanden
     if ($v[_egbolig_webform_get_webform_cid($tree, 'child_cpr_nr')]
-        || $v[_egbolig_webform_get_webform_cid($tree, 'cpr_nr')]
-        || $v[_egbolig_webform_get_webform_cid($tree, 'child_birthday')]) {
+      || $v[_egbolig_webform_get_webform_cid($tree, 'cpr_nr')]
+      || $v[_egbolig_webform_get_webform_cid($tree, 'child_birthday')]
+    ) {
       $children++;
     }
     //counting adult child
@@ -121,7 +122,7 @@ function egbolig_webform_populate_member($member, $form_state) {
   $member->EducationStart = $v[_egbolig_webform_get_webform_cid($tree, 'education_start_date')];
   $member->EducationEnd = $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')];
   $member->EducationExpectedEnd = $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')];
-  $member->EducationDocumentationReceived = ($v[_egbolig_webform_get_webform_cid($tree, 'education_doc')] > 0);//TODO: not working with WS
+  $member->EducationDocumentationReceived = ($v[_egbolig_webform_get_webform_cid($tree, 'education_doc')] > 0); //TODO: not working with WS
   $member->EducationalInstitution = $v[_egbolig_webform_get_webform_cid($tree, 'institution_name')];
   $member->MinimumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_min')];
   $member->MaximumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_max')];
@@ -156,13 +157,13 @@ function education_get_list() {
 }
 
 /**
-  * Updates the member education via the webservice.
-  *
-  */
+ * Updates the member education via the webservice.
+ *
+ */
 function _egbolig_webform_ws_update_education($member) {
   $client = new SoapClient(variable_get('soap_webservice'));
   $response = $client->MemberUpdateEducation(
-    array (
+    array(
       'member' => $member,
     )
   );
@@ -177,13 +178,10 @@ function education_places() {
   $placeslist = array();
   $client = new SoapClient(variable_get('soap_webservice'));
   $education_places =
-    $client->EducationalInstitutionGetList()->
-    EducationalInstitutionGetListResult->
-    EducationalInstitution;
-  if(count($education_places) > 0) {
-    foreach($education_places as $place)
-    {
-        $placeslist[$place->Id] = $place->Name;
+    $client->EducationalInstitutionGetList()->EducationalInstitutionGetListResult->EducationalInstitution;
+  if (count($education_places) > 0) {
+    foreach ($education_places as $place) {
+      $placeslist[$place->Id] = $place->Name;
     }
   }
   else {
@@ -201,11 +199,9 @@ function accommodation_types() {
   $accommodationlist = array();
   $client = new SoapClient(variable_get('soap_webservice'));
   $apartment_types =
-    $client->TenancyTypeGetList()->
-    TenancyTypeGetListResult->
-    TenancyType;
-  foreach($apartment_types as $type) {
-      $accommodationlist[] = $type->Text;
+    $client->TenancyTypeGetList()->TenancyTypeGetListResult->TenancyType;
+  foreach ($apartment_types as $type) {
+    $accommodationlist[] = $type->Text;
   }
   return $accommodationlist;
 }
@@ -214,7 +210,8 @@ function _egbolig_webform_get_webform_cid($tree, $form_key) {
   foreach ($tree as $child) {
     if ($child['form_key'] === $form_key) {
       return $child['cid'];
-    } else {
+    }
+    else {
       if ($child['children']) {
         $cid = _egbolig_webform_get_webform_cid($child['children'], $form_key);
         if ($cid) {
@@ -234,8 +231,8 @@ function profession_get_list() {
   $professionList = array();
   $client = new SoapClient(variable_get('soap_webservice'));
   $professions = $client->ProfessionGetList()->ProfessionGetListResult->Profession;
-  foreach($professions as $prof) {
-      $professionList[$prof->Id] = $prof->Name;
+  foreach ($professions as $prof) {
+    $professionList[$prof->Id] = $prof->Name;
   }
   return $professionList;
 }
