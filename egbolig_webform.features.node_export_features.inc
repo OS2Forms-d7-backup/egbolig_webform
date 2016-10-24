@@ -1334,7 +1334,7 @@ function egbolig_webform_node_export_features_default() {
             \'form_key\' => \'institution_name\',
             \'name\' => \'Uddannelsessted\',
             \'type\' => \'select\',
-            \'value\' => \'1\',
+            \'value\' => \'\',
             \'extra\' => array(
               \'items\' => \'1|"Skal afklares"\',
               \'options_source\' => \'education_place\',
@@ -1365,7 +1365,7 @@ function egbolig_webform_node_export_features_default() {
             \'form_key\' => \'education_name\',
             \'name\' => \'Uddannelsestype\',
             \'type\' => \'select\',
-            \'value\' => \'909\',
+            \'value\' => \'\',
             \'extra\' => array(
               \'items\' => \'1|"Skal afklares"\',
               \'options_source\' => \'education\',
@@ -1861,7 +1861,7 @@ function egbolig_webform_node_export_features_default() {
             \'form_key\' => \'arsog\',
             \'name\' => \'Vælg årsag\',
             \'type\' => \'select\',
-            \'value\' => \'1\',
+            \'value\' => \'\',
             \'extra\' => array(
               \'description\' => "\\r\\n",
               \'items\' => "1|Skilsmisse/samlivsophør med børn\\r\\n2|Ændret økonomi\\r\\n3|Ældre-/handicapegnet bolig\\r\\n4|Graviditet",
@@ -1911,7 +1911,7 @@ function egbolig_webform_node_export_features_default() {
             \'form_key\' => \'house_type\',
             \'name\' => \'Boligtype\',
             \'type\' => \'select\',
-            \'value\' => \'rent\',
+            \'value\' => \'\',
             \'extra\' => array(
               \'items\' => \'rent|Lejebolig\',
               \'options_source\' => \'accommodation_types\',
