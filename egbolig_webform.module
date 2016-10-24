@@ -66,7 +66,6 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
         //TODO: add security check that this user can access this CPR submitted data
         $member = egbolig_webform_ws_get_member_by_cpr($cpr);
         if ($member) {
-          drupal_set_message(print_r($member, 1));
           //saving for integrity
           $form_state['hashcode'] = md5($cpr);
 
@@ -103,7 +102,6 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
 }
 
 function egbolig_webform_synch_submission($form, &$form_state) {
-  //dpm($form_state);
   $cpr = $form_state['values']['submitted'][_egbolig_webform_get_webform_cid($form_state['webform']['component_tree']['children'], 'cpr')];
 
   //updating submission
