@@ -119,9 +119,9 @@ function egbolig_webform_populate_member($member, $form_state) {
   }
   $member->Children = $children;
   $member->Education = $v[_egbolig_webform_get_webform_cid($tree, 'education_name')];
-  $member->EducationStart = $v[_egbolig_webform_get_webform_cid($tree, 'education_start_date')];
-  $member->EducationEnd = $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')];
-  $member->EducationExpectedEnd = $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')];
+  $member->EducationStart = date("Y-m-d", strtotime($v[_egbolig_webform_get_webform_cid($tree, 'education_start_date')]));
+  $member->EducationEnd = date("Y-m-d", strtotime($v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]));
+  $member->EducationExpectedEnd = date("Y-m-d", strtotime($v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]));
   $member->EducationDocumentationReceived = ($v[_egbolig_webform_get_webform_cid($tree, 'education_doc')] > 0); //TODO: not working with WS
   $member->EducationalInstitution = $v[_egbolig_webform_get_webform_cid($tree, 'institution_name')];
   $member->MinimumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_min')];
