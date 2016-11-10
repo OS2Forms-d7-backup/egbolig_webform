@@ -74,6 +74,9 @@ function egbolig_webform_ws_update_member($member) {
   );
 
   _egbolig_webform_ws_update_education($member_array);
+  if (isset($member->Cpr62)) {
+    _egbolig_webform_ws_update_partner($member_array);
+  }
 }
 
 /**
@@ -127,6 +130,8 @@ function egbolig_webform_populate_member($member, $form_state) {
   $member->MinimumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_min')];
   $member->MaximumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_max')];
   //$member->Pet TODO: fix the Pets list
+  if ($v[_egbolig_webform_get_webform_cid($tree, 'has_partner')])
+     $member->Cpr62 = $v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')];
 
   return $member;
 }
@@ -168,6 +173,23 @@ function _egbolig_webform_ws_update_education($member) {
     )
   );
 }
+
+/**
+ * Updates the member partner via the webservice.
+ *
+ */
+function _egbolig_webform_ws_update_partner($member) {
+  $client = new SoapClient(variable_get('soap_webservice'));
+  $partner_array = array(
+    'memberCompanyNo' => $member['MemberCompanyNo'],
+    'memberNo' => $member['MemberNo'],
+    'name' => $member['Name'],
+    'cpr62' => $member['Cpr62']
+  );
+;
+  $response = $client->MemberUpdatePartner($partner_array );
+}
+
 
 /**
  * Returns a list of education places from webservice

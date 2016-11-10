@@ -79,6 +79,11 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
           $form['submitted']['row1']['col1']['basic_data']['c_o_addresse']['#default_value'] = $member->CoAddress;
           $form['submitted']['row1']['col1']['basic_data']['post_nr___by']['#default_value'] = $member->PostalCodeCity;
 
+          if ($member->Cpr62) {
+            $form['submitted']['row2']['col21']['partner']['has_partner'][1]['#default_value'] = 1;
+            $form['submitted']['row2']['col21']['partner']['parner_cpr_nr']['#default_value'] = $member->Cpr62;
+          }
+
           $form['submitted']['row6']['col61']['additional_info']['row61']['col62']['husleje_min']['#default_value'] = $member->MinimumRent;
           $form['submitted']['row6']['col61']['additional_info']['row61']['col62']['husleje_max']['#default_value'] = $member->MaximumRent;
         }
