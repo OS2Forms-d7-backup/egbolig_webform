@@ -1,4 +1,5 @@
 <?php
+
 define('DEFAULT_COUNTRY', 'DANMARK');
 define('DEFAULT_EMAIL', 'WEBTEST@bellcom.dk');
 define('DEFAULT_PASSWORD', 'retmig');
@@ -78,32 +79,33 @@ function egbolig_webform_ws_update_member($member) {
     _egbolig_webform_ws_update_partner($member_array);
   }
 }
+
 /**
  * Updates the children via the webservice.
  * Internally calls _egbolig_ws_update_education
  */
-function egbolig_webform_ws_add_children($member, $form_state){
+function egbolig_webform_ws_add_children($member, $form_state) {
   $v = $form_state['values']['submitted'];
   $tree = $form_state['webform']['component_tree']['children'];
   $childrenList = _egbolig_webform_get_children_by_member($member->MemberNo, $member->MemberCompanyNo);
   $client = new SoapClient(variable_get('soap_webservice'));
-  for($i=1; $i<=10; $i++) {
-   $child_cpr = $v[_egbolig_webform_get_webform_cid($tree, 'child_cpr_nr_' . (string)$i)];
-   if (!empty($child_cpr) && !egbolig_webform_is_child_exists($child_cpr, $childrenList)){
-    $child =array (
-      'CompanyNo' => $member->MemberCompanyNo,
-      'Cpr4' => substr($child_cpr, -4),
-      'Cpr6' => substr($child_cpr, 0, 6),
-      'MemberNo' => $member->MemberNo,
-      'Name' => $member->Name
+  for ($i = 1; $i <= 10; $i++) {
+    $child_cpr = $v[_egbolig_webform_get_webform_cid($tree, 'child_cpr_nr_' . (string) $i)];
+    if (!empty($child_cpr) && !egbolig_webform_is_child_exists($child_cpr, $childrenList)) {
+      $child = array(
+        'CompanyNo' => $member->MemberCompanyNo,
+        'Cpr4' => substr($child_cpr, -4),
+        'Cpr6' => substr($child_cpr, 0, 6),
+        'MemberNo' => $member->MemberNo,
+        'Name' => $member->Name
       );
-   $response = $client->ChildAdd(
-    array(
-    'child' => $child)
-    );
+      $response = $client->ChildAdd(
+        array(
+          'child' => $child)
+      );
+    }
   }
-  }
-  }
+}
 
 /**
  * Populates the member object with the values from the form submission.
@@ -142,7 +144,7 @@ function egbolig_webform_populate_member($member, $form_state) {
   $member->MinimumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_min')];
   $member->MaximumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_max')];
   if ($v[_egbolig_webform_get_webform_cid($tree, 'has_partner')])
-     $member->Cpr62 = $v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')];
+    $member->Cpr62 = $v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')];
   //$member->Pet TODO: fix the Pets list
 
   return $member;
@@ -159,13 +161,13 @@ function education_get_list() {
   $edulist = array();
 
   foreach ($educations as $education) {
-    if (strlen($education->Name) == 1) {
+    if (!in_array($education->Id, array(1, 2, 3))) {
       continue;
-    }
-    elseif ($education->Name == 'æ' || $education->Name == 'ø' || $education->Name == 'å') {
+    } elseif (strlen($education->Name) == 1) {
       continue;
-    }
-    else {
+    } elseif ($education->Name == 'æ' || $education->Name == 'ø' || $education->Name == 'å') {
+      continue;
+    } else {
       $edulist[$education->Id] = mb_convert_case($education->Name, MB_CASE_TITLE, "UTF-8");
     }
   }
@@ -198,8 +200,8 @@ function _egbolig_webform_ws_update_partner($member) {
     'name' => $member['Name'],
     'cpr62' => $member['Cpr62']
   );
-;
-  $response = $client->MemberUpdatePartner($partner_array );
+  ;
+  $response = $client->MemberUpdatePartner($partner_array);
 }
 
 /**
@@ -210,14 +212,12 @@ function _egbolig_webform_ws_update_partner($member) {
 function education_places() {
   $placeslist = array();
   $client = new SoapClient(variable_get('soap_webservice'));
-  $education_places =
-    $client->EducationalInstitutionGetList()->EducationalInstitutionGetListResult->EducationalInstitution;
+  $education_places = $client->EducationalInstitutionGetList()->EducationalInstitutionGetListResult->EducationalInstitution;
   if (count($education_places) > 0) {
     foreach ($education_places as $place) {
       $placeslist[$place->Id] = $place->Name;
     }
-  }
-  else {
+  } else {
     $placeslist[] = 'Ingen uddannelsessteder';
   }
   return $placeslist;
@@ -231,8 +231,7 @@ function education_places() {
 function accommodation_types() {
   $accommodationlist = array();
   $client = new SoapClient(variable_get('soap_webservice'));
-  $apartment_types =
-    $client->TenancyTypeGetList()->TenancyTypeGetListResult->TenancyType;
+  $apartment_types = $client->TenancyTypeGetList()->TenancyTypeGetListResult->TenancyType;
   foreach ($apartment_types as $type) {
     $accommodationlist[] = $type->Text;
   }
@@ -243,8 +242,7 @@ function _egbolig_webform_get_webform_cid($tree, $form_key) {
   foreach ($tree as $child) {
     if ($child['form_key'] === $form_key) {
       return $child['cid'];
-    }
-    else {
+    } else {
       if ($child['children']) {
         $cid = _egbolig_webform_get_webform_cid($child['children'], $form_key);
         if ($cid) {
@@ -279,20 +277,23 @@ function _egbolig_webform_get_children_by_member($memberNo, $companyNo) {
   $childrenList = array();
   $client = new SoapClient(variable_get('soap_webservice'));
   $children = $client->ChildGetByMember(array('companyNo' => $companyNo, 'memberNo' => $memberNo))->ChildGetByMemberResult->Child;
-  if (is_array($children)){
-  foreach ($children as $child) {
-    $childrenList[] = array ('Cpr6' => $child->Cpr6, 'Cpr4' => $child->Cpr4);
-  }}
-  else $childrenList[] = array ('Cpr6' => $children->Cpr6, 'Cpr4' => $children->Cpr4);
+  if (is_array($children)) {
+    foreach ($children as $child) {
+      $childrenList[] = array('Cpr6' => $child->Cpr6, 'Cpr4' => $child->Cpr4);
+    }
+  } else
+    $childrenList[] = array('Cpr6' => $children->Cpr6, 'Cpr4' => $children->Cpr4);
 
   return $childrenList;
 }
+
 /*
  * checks if child added to the member
  */
-function egbolig_webform_is_child_exists($child_cpr, $childrenList){
-  foreach ($childrenList as $child){
-    if ($child['Cpr4'] == substr($child_cpr, -4) &&  $child['Cpr6'] == substr($child_cpr, 0, 6))
+
+function egbolig_webform_is_child_exists($child_cpr, $childrenList) {
+  foreach ($childrenList as $child) {
+    if ($child['Cpr4'] == substr($child_cpr, -4) && $child['Cpr6'] == substr($child_cpr, 0, 6))
       return TRUE;
   }
   return FALSE;
