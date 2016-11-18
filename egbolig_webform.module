@@ -60,7 +60,7 @@ function egbolig_webform_get_previous_submission_message($form, $form_state) {
 function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL) {
   //cannot fully use $form_id as it's dependent on node ID
   if (strpos($form_id, 'webform_client_form') > -1) {
-    if ($form['#node']->type == 'webform' && $form['#node']->title == 'EG-Bolig ansÃ¸gningsskema') {
+    if ($form['#node']->type == 'webform' && $form['#node']->title == 'EG Bolig ansøgningskema') {
       $form['#attached']['css'][] = drupal_get_path('module', 'egbolig_webform') . '/css/egbolig_webform.css';
       $cpr = $_GET['cpr'];
       if ($cpr) {
