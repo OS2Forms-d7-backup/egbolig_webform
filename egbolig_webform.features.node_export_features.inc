@@ -46,10 +46,10 @@ function egbolig_webform_node_export_features_default() {
       \'uid\' => \'1\',
       \'uuid\' => \'c732228f-4e35-4eba-b526-223e3f74640a\',
       \'vid\' => NULL,
-      \'vuuid\' => \'a0298ac9-6caf-418a-bb4a-d4f0dbc96b0c\',
+      \'vuuid\' => \'1ea24e29-e571-4b6b-ba28-93eb54499e03\',
       \'webform\' => array(
-        \'nid\' => \'23\',
-        \'next_serial\' => \'147\',
+        \'nid\' => \'47506\',
+        \'next_serial\' => \'149\',
         \'confirmation\' => "Tak for din henvendelse. \\r\\nBallerup Kommune, Boligkontoret har nu modtaget din ansøgning. Du vil blive kontaktet, såfremt der mangler yderligere oplysninger.\\r\\nInden for kort tid vil du modtage en kopi af din ansøgning i din digitale postkasse. Hvis du er fritaget for digital post, vil du modtage et brev.\\r\\nVi skal gøre opmærksom på, at du ikke øger dine chancer for at få en bolig ved at ringe til Boligkontoret. \\r\\nI stedet vil vi bede dig om at vedligeholde din ansøgning, så ændringer i dine personlige forhold opdateres. \\r\\nPå den måde er du med til at sikre, at oplysningerne om dit boligbehov er opdateret. Hvis du skal ændre i din ansøgning, skal du logge på igen for at lave ændringerne.\\r\\nNår vi har et tilbud om bolig til dig, vil du modtage et brev i din digitale postkasse. Hvis du er fritaget for digital post, vil du modtage et brev.  \\r\\n\\r\\nMed venlig hilsen\\r\\nBoligkontoret\\r\\nBallerup Kommune\\r\\n",
         \'confirmation_format\' => \'plain_text\',
         \'redirect_url\' => \'<confirmation>\',
@@ -86,7 +86,7 @@ function egbolig_webform_node_export_features_default() {
         \'emails\' => array(),
         \'components\' => array(
           99 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'99\',
             \'pid\' => \'0\',
             \'form_key\' => \'row0\',
@@ -103,7 +103,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           100 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'100\',
             \'pid\' => \'99\',
             \'form_key\' => \'col0\',
@@ -122,7 +122,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           101 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'101\',
             \'pid\' => \'100\',
             \'form_key\' => \'previous_submission_message\',
@@ -139,7 +139,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           102 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'102\',
             \'pid\' => \'0\',
             \'form_key\' => \'row1\',
@@ -156,7 +156,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           103 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'103\',
             \'pid\' => \'102\',
             \'form_key\' => \'col1\',
@@ -175,7 +175,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           104 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'104\',
             \'pid\' => \'103\',
             \'form_key\' => \'basic_data\',
@@ -196,7 +196,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           105 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'105\',
             \'pid\' => \'104\',
             \'form_key\' => \'cpr\',
@@ -224,7 +224,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           106 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'106\',
             \'pid\' => \'104\',
             \'form_key\' => \'name\',
@@ -253,7 +253,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           107 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'107\',
             \'pid\' => \'104\',
             \'form_key\' => \'addresse\',
@@ -282,7 +282,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           108 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'108\',
             \'pid\' => \'104\',
             \'form_key\' => \'c_o_addresse\',
@@ -311,7 +311,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           109 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'109\',
             \'pid\' => \'104\',
             \'form_key\' => \'post_nr___by\',
@@ -340,7 +340,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           110 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'110\',
             \'pid\' => \'102\',
             \'form_key\' => \'col2\',
@@ -359,7 +359,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           111 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'111\',
             \'pid\' => \'110\',
             \'form_key\' => \'phone_nr\',
@@ -389,7 +389,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           112 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'112\',
             \'pid\' => \'110\',
             \'form_key\' => \'telefonnummer_mobil\',
@@ -419,7 +419,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           113 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'113\',
             \'pid\' => \'110\',
             \'form_key\' => \'more_info\',
@@ -446,7 +446,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           114 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'114\',
             \'pid\' => \'113\',
             \'form_key\' => \'is_citezen_markup\',
@@ -463,7 +463,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           115 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'115\',
             \'pid\' => \'113\',
             \'form_key\' => \'is_citizen\',
@@ -494,7 +494,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           116 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'116\',
             \'pid\' => \'113\',
             \'form_key\' => \'has_children_markup\',
@@ -511,7 +511,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           117 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'117\',
             \'pid\' => \'113\',
             \'form_key\' => \'has_children\',
@@ -542,7 +542,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           118 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'118\',
             \'pid\' => \'113\',
             \'form_key\' => \'status\',
@@ -573,7 +573,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           119 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'119\',
             \'pid\' => \'0\',
             \'form_key\' => \'row2\',
@@ -590,7 +590,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           120 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'120\',
             \'pid\' => \'119\',
             \'form_key\' => \'col21\',
@@ -609,7 +609,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           121 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'121\',
             \'pid\' => \'120\',
             \'form_key\' => \'partner\',
@@ -630,7 +630,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           122 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'122\',
             \'pid\' => \'121\',
             \'form_key\' => \'has_partner\',
@@ -664,7 +664,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           123 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'123\',
             \'pid\' => \'121\',
             \'form_key\' => \'parner_cpr_nr\',
@@ -696,7 +696,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           124 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'124\',
             \'pid\' => \'120\',
             \'form_key\' => \'children_fieldset\',
@@ -720,7 +720,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           125 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'125\',
             \'pid\' => \'124\',
             \'form_key\' => \'row21\',
@@ -737,7 +737,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           126 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'126\',
             \'pid\' => \'125\',
             \'form_key\' => \'col22\',
@@ -756,7 +756,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           127 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'127\',
             \'pid\' => \'126\',
             \'form_key\' => \'children\',
@@ -780,7 +780,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           128 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'128\',
             \'pid\' => \'127\',
             \'form_key\' => \'child_cpr_nr_1\',
@@ -813,7 +813,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           195 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'195\',
             \'pid\' => \'127\',
             \'form_key\' => \'child_cpr_nr_2\',
@@ -846,7 +846,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           196 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'196\',
             \'pid\' => \'127\',
             \'form_key\' => \'child_cpr_nr_3\',
@@ -879,7 +879,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           197 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'197\',
             \'pid\' => \'127\',
             \'form_key\' => \'child_cpr_nr_4\',
@@ -912,7 +912,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           198 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'198\',
             \'pid\' => \'127\',
             \'form_key\' => \'child_cpr_nr_5\',
@@ -945,7 +945,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           199 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'199\',
             \'pid\' => \'127\',
             \'form_key\' => \'child_cpr_nr_6\',
@@ -978,7 +978,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           200 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'200\',
             \'pid\' => \'127\',
             \'form_key\' => \'child_cpr_nr_7\',
@@ -1011,7 +1011,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           201 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'201\',
             \'pid\' => \'127\',
             \'form_key\' => \'child_cpr_nr_8\',
@@ -1044,7 +1044,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           202 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'202\',
             \'pid\' => \'127\',
             \'form_key\' => \'child_cpr_nr_9\',
@@ -1077,7 +1077,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           203 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'203\',
             \'pid\' => \'127\',
             \'form_key\' => \'child_cpr_nr_10\',
@@ -1110,7 +1110,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           129 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'129\',
             \'pid\' => \'0\',
             \'form_key\' => \'row3\',
@@ -1127,7 +1127,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           130 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'130\',
             \'pid\' => \'129\',
             \'form_key\' => \'col31\',
@@ -1146,7 +1146,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           131 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'131\',
             \'pid\' => \'130\',
             \'form_key\' => \'under_education\',
@@ -1167,7 +1167,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           132 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'132\',
             \'pid\' => \'131\',
             \'form_key\' => \'row31\',
@@ -1184,7 +1184,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           133 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'133\',
             \'pid\' => \'132\',
             \'form_key\' => \'col32\',
@@ -1203,7 +1203,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           134 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'134\',
             \'pid\' => \'133\',
             \'form_key\' => \'institution_name\',
@@ -1234,7 +1234,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           135 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'135\',
             \'pid\' => \'133\',
             \'form_key\' => \'education_name\',
@@ -1265,7 +1265,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           136 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'136\',
             \'pid\' => \'132\',
             \'form_key\' => \'col33\',
@@ -1284,7 +1284,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           137 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'137\',
             \'pid\' => \'136\',
             \'form_key\' => \'education_start_date\',
@@ -1306,7 +1306,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           138 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'138\',
             \'pid\' => \'132\',
             \'form_key\' => \'col34\',
@@ -1325,7 +1325,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           139 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'139\',
             \'pid\' => \'138\',
             \'form_key\' => \'education_end_date\',
@@ -1347,7 +1347,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           140 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'140\',
             \'pid\' => \'132\',
             \'form_key\' => \'col35\',
@@ -1366,7 +1366,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           141 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'141\',
             \'pid\' => \'140\',
             \'form_key\' => \'education_doc\',
@@ -1402,7 +1402,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           142 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'142\',
             \'pid\' => \'0\',
             \'form_key\' => \'row8\',
@@ -1419,7 +1419,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           143 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'143\',
             \'pid\' => \'142\',
             \'form_key\' => \'col81\',
@@ -1438,7 +1438,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           144 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'144\',
             \'pid\' => \'143\',
             \'form_key\' => \'work\',
@@ -1459,7 +1459,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           145 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'145\',
             \'pid\' => \'144\',
             \'form_key\' => \'row31\',
@@ -1475,58 +1475,8 @@ function egbolig_webform_node_export_features_default() {
             \'weight\' => \'125\',
             \'page_num\' => 1,
           ),
-          146 => array(
-            \'nid\' => 23,
-            \'cid\' => \'146\',
-            \'pid\' => \'145\',
-            \'form_key\' => \'col82\',
-            \'name\' => \'col82\',
-            \'type\' => \'bt_layout_cols\',
-            \'value\' => \'\',
-            \'extra\' => array(
-              \'private\' => 0,
-              \'css_classes\' => \'\',
-              \'bt_cols\' => \'6\',
-              \'bt_breakpoint\' => \'sm\',
-              \'translated_strings\' => array(),
-            ),
-            \'required\' => \'0\',
-            \'weight\' => \'126\',
-            \'page_num\' => 1,
-          ),
-          147 => array(
-            \'nid\' => 23,
-            \'cid\' => \'147\',
-            \'pid\' => \'146\',
-            \'form_key\' => \'job_name\',
-            \'name\' => \'Job liste\',
-            \'type\' => \'select\',
-            \'value\' => \'1\',
-            \'extra\' => array(
-              \'items\' => "ARK  |Landskabsarkitekt\\r\\nEL   |Elektriker\\r\\nFORSY|Forsyningsselskab\\r\\nGAR  |Gartner\\r\\nINK  |Legepladsinspektør\\r\\nINV  |Inventar\\r\\nKLO  |Kloak\\r\\nMAB  |Egnet Mandskab\\r\\nMAL  |Maler\\r\\nMEK  |Mekaniker/Egnet Manskab\\r\\nMON  |Montør\\r\\nMUR  |Murer\\r\\nTØM  |Tømrer\\r\\nUDBK |Boligstøttekontor\\r\\nVVS  |VVS\\r\\n",
-              \'options_source\' => \'profession\',
-              \'multiple\' => 0,
-              \'title_display\' => \'before\',
-              \'description_above\' => 0,
-              \'private\' => 0,
-              \'wrapper_classes\' => \'\',
-              \'css_classes\' => \'\',
-              \'aslist\' => 1,
-              \'encrypt\' => 0,
-              \'empty_option\' => \'\',
-              \'optrand\' => 0,
-              \'other_option\' => NULL,
-              \'other_text\' => \'Other...\',
-              \'description\' => \'\',
-              \'custom_keys\' => FALSE,
-              \'analysis\' => TRUE,
-            ),
-            \'required\' => \'1\',
-            \'weight\' => \'97\',
-            \'page_num\' => 1,
-          ),
           148 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'148\',
             \'pid\' => \'145\',
             \'form_key\' => \'col83\',
@@ -1545,7 +1495,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           149 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'149\',
             \'pid\' => \'148\',
             \'form_key\' => \'submit_doc\',
@@ -1581,7 +1531,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           150 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'150\',
             \'pid\' => \'0\',
             \'form_key\' => \'row4\',
@@ -1598,7 +1548,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           151 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'151\',
             \'pid\' => \'150\',
             \'form_key\' => \'col41\',
@@ -1617,7 +1567,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           152 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'152\',
             \'pid\' => \'151\',
             \'form_key\' => \'nuvaerende_situation\',
@@ -1638,7 +1588,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           153 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'153\',
             \'pid\' => \'152\',
             \'form_key\' => \'row41\',
@@ -1651,11 +1601,11 @@ function egbolig_webform_node_export_features_default() {
               \'translated_strings\' => array(),
             ),
             \'required\' => \'0\',
-            \'weight\' => \'129\',
+            \'weight\' => \'130\',
             \'page_num\' => 1,
           ),
           154 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'154\',
             \'pid\' => \'153\',
             \'form_key\' => \'col42\',
@@ -1674,7 +1624,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           155 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'155\',
             \'pid\' => \'154\',
             \'form_key\' => \'home_exists\',
@@ -1704,56 +1654,8 @@ function egbolig_webform_node_export_features_default() {
             \'weight\' => \'89\',
             \'page_num\' => 1,
           ),
-          156 => array(
-            \'nid\' => 23,
-            \'cid\' => \'156\',
-            \'pid\' => \'154\',
-            \'form_key\' => \'hvorfor_soeger_du_top\',
-            \'name\' => \'Hvorfor søger du?\',
-            \'type\' => \'markup\',
-            \'value\' => "<p><strong>Skilsmisse / samlivsophør med børn</strong><br />\\r\\nDu skal vedhæfte en kopi eller billede af din separationsbevilling eller dokumentation på samlivsophør. Du skal samtidig oplyse, om barnet/børnene skal bo hos dig eller om du skal have samkvem.</p>\\r\\n\\r\\n<p><strong>Ændret økonomi</strong><br />\\r\\nDu skal vedhæfte en kopi eller billede af årsagen til din/jeres ændrede økonomi. Det kan fx være andet arbejde/ledighedtvangsauktio/dødsfald mm.</p>\\r\\n\\r\\n<p><strong>Ældre- / handicapegnet bolig</strong><br />\\r\\nHerunder gælder sygdom med nedsat funktionsevne, handicap mm. Du skal vedhæfte en kopi eller billede med dokumentation fra egen læge, hospital eller lign. Din ansøgning kan først behandles, når dokumentationen er modtaget. Hvis du skal søge om ældrebolig eller plejebolig, skal du kontakte <a href=\\"https://ballerup.dk/borger/seniorer/boliger-aeldre/aeldre-og-handicapegnede-boliger\\">Visitationen</a></p>\\r\\n\\r\\n<p><strong>Graviditet</strong><br />\\r\\nHvis du er gravid og ikke har din egen bolig, kan du søge om bolig hos Ballerup Kommune. Du skal vedhæfte kopi eller billede af din vandrejournal, hvor det fremgår, hvornår du har termin. Din ansøgning kan ikke behandles før vandrejournalen er modtaget og du er i 20. graviditetsuge</p>\\r\\n",
-            \'extra\' => array(
-              \'format\' => \'filtered_html\',
-              \'private\' => 0,
-              \'display_on\' => \'form\',
-            ),
-            \'required\' => \'0\',
-            \'weight\' => \'91\',
-            \'page_num\' => 1,
-          ),
-          157 => array(
-            \'nid\' => 23,
-            \'cid\' => \'157\',
-            \'pid\' => \'154\',
-            \'form_key\' => \'arsog\',
-            \'name\' => \'Vælg årsag\',
-            \'type\' => \'select\',
-            \'value\' => \'1\',
-            \'extra\' => array(
-              \'title_display\' => \'inline\',
-              \'description_above\' => 0,
-              \'private\' => 0,
-              \'wrapper_classes\' => \'\',
-              \'css_classes\' => \'\',
-              \'aslist\' => 1,
-              \'other_option\' => 0,
-              \'items\' => "1|Skilsmisse/samlivsophør med børn\\r\\n3|Ændret økonomi\\r\\n4|Ældre-/handicapegnet bolig\\r\\n6|Graviditet\\r\\n",
-              \'multiple\' => 0,
-              \'custom_keys\' => 1,
-              \'encrypt\' => 0,
-              \'empty_option\' => \'\',
-              \'optrand\' => 0,
-              \'other_text\' => \'Other...\',
-              \'description\' => \'\',
-              \'options_source\' => \'\',
-              \'analysis\' => TRUE,
-            ),
-            \'required\' => \'0\',
-            \'weight\' => \'92\',
-            \'page_num\' => 1,
-          ),
           158 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'158\',
             \'pid\' => \'153\',
             \'form_key\' => \'col43\',
@@ -1772,7 +1674,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           159 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'159\',
             \'pid\' => \'158\',
             \'form_key\' => \'house_type\',
@@ -1799,11 +1701,131 @@ function egbolig_webform_node_export_features_default() {
               \'analysis\' => TRUE,
             ),
             \'required\' => \'0\',
-            \'weight\' => \'90\',
+            \'weight\' => \'93\',
+            \'page_num\' => 1,
+          ),
+          209 => array(
+            \'nid\' => 47506,
+            \'cid\' => \'209\',
+            \'pid\' => \'158\',
+            \'form_key\' => \'arsog\',
+            \'name\' => \'Vælg årsag\',
+            \'type\' => \'select\',
+            \'value\' => \'1\',
+            \'extra\' => array(
+              \'title_display\' => \'inline\',
+              \'description_above\' => 0,
+              \'private\' => 0,
+              \'wrapper_classes\' => \'\',
+              \'css_classes\' => \'\',
+              \'aslist\' => 1,
+              \'other_option\' => 0,
+              \'items\' => "1|Skilsmisse/samlivsophør med børn\\r\\n3|Ændret økonomi\\r\\n4|Ældre-/handicapegnet bolig\\r\\n6|Graviditet\\r\\n",
+              \'multiple\' => 0,
+              \'custom_keys\' => 1,
+              \'encrypt\' => 0,
+              \'empty_option\' => \'\',
+              \'optrand\' => 0,
+              \'other_text\' => \'Other...\',
+              \'description\' => \'\',
+              \'options_source\' => \'\',
+              \'analysis\' => TRUE,
+            ),
+            \'required\' => \'0\',
+            \'weight\' => \'94\',
+            \'page_num\' => 1,
+          ),
+          205 => array(
+            \'nid\' => 47506,
+            \'cid\' => \'205\',
+            \'pid\' => \'152\',
+            \'form_key\' => \'row42\',
+            \'name\' => \'row42\',
+            \'type\' => \'bt_layout_row\',
+            \'value\' => \'\',
+            \'extra\' => array(
+              \'private\' => 0,
+              \'css_classes\' => \'\',
+              \'encrypt\' => 0,
+            ),
+            \'required\' => \'0\',
+            \'weight\' => \'131\',
+            \'page_num\' => 1,
+          ),
+          206 => array(
+            \'nid\' => 47506,
+            \'cid\' => \'206\',
+            \'pid\' => \'205\',
+            \'form_key\' => \'col421\',
+            \'name\' => \'col421\',
+            \'type\' => \'bt_layout_cols\',
+            \'value\' => \'\',
+            \'extra\' => array(
+              \'private\' => 0,
+              \'css_classes\' => \'\',
+              \'bt_cols\' => \'6\',
+              \'encrypt\' => 0,
+              \'bt_breakpoint\' => \'sm\',
+            ),
+            \'required\' => \'0\',
+            \'weight\' => \'130\',
+            \'page_num\' => 1,
+          ),
+          208 => array(
+            \'nid\' => 47506,
+            \'cid\' => \'208\',
+            \'pid\' => \'206\',
+            \'form_key\' => \'hvorfor_soeger_du_left\',
+            \'name\' => \'Hvorfor søger du?\',
+            \'type\' => \'markup\',
+            \'value\' => "<p><strong>Skilsmisse / samlivsophør med børn</strong><br />\\r\\nDu skal vedhæfte en kopi eller billede af din separationsbevilling eller dokumentation på samlivsophør. Du skal samtidig oplyse, om barnet/børnene skal bo hos dig eller om du skal have samkvem.</p>\\r\\n\\r\\n<p><strong>Graviditet</strong><br />\\r\\nHvis du er gravid og ikke har din egen bolig, kan du søge om bolig hos Ballerup Kommune. Du skal vedhæfte kopi eller billede af din vandrejournal, hvor det fremgår, hvornår du har termin. Din ansøgning kan ikke behandles før vandrejournalen er modtaget og du er i 20. graviditetsuge</p>\\r\\n",
+            \'extra\' => array(
+              \'format\' => \'filtered_html\',
+              \'private\' => 0,
+              \'display_on\' => \'form\',
+            ),
+            \'required\' => \'0\',
+            \'weight\' => \'91\',
+            \'page_num\' => 1,
+          ),
+          210 => array(
+            \'nid\' => 47506,
+            \'cid\' => \'210\',
+            \'pid\' => \'205\',
+            \'form_key\' => \'col43\',
+            \'name\' => \'col43\',
+            \'type\' => \'bt_layout_cols\',
+            \'value\' => \'\',
+            \'extra\' => array(
+              \'private\' => 0,
+              \'css_classes\' => \'\',
+              \'bt_cols\' => \'6\',
+              \'bt_breakpoint\' => \'sm\',
+              \'translated_strings\' => array(),
+            ),
+            \'required\' => \'0\',
+            \'weight\' => \'131\',
+            \'page_num\' => 1,
+          ),
+          212 => array(
+            \'nid\' => 47506,
+            \'cid\' => \'212\',
+            \'pid\' => \'210\',
+            \'form_key\' => \'hvorfor_soeger_du_right\',
+            \'name\' => \'Hvorfor søger du?\',
+            \'type\' => \'markup\',
+            \'value\' => "<p><strong>Ændret økonomi</strong><br />\\r\\nDu skal vedhæfte en kopi eller billede af årsagen til din/jeres ændrede økonomi. Det kan fx være andet arbejde/ledighedtvangsauktio/dødsfald mm.</p>\\r\\n\\r\\n<p><strong>Ældre- / handicapegnet bolig</strong><br />\\r\\nHerunder gælder sygdom med nedsat funktionsevne, handicap mm. Du skal vedhæfte en kopi eller billede med dokumentation fra egen læge, hospital eller lign. Din ansøgning kan først behandles, når dokumentationen er modtaget. Hvis du skal søge om ældrebolig eller plejebolig, skal du kontakte <a href=\\"https://ballerup.dk/borger/seniorer/boliger-aeldre/aeldre-og-handicapegnede-boliger\\">Visitationen</a></p>\\r\\n",
+            \'extra\' => array(
+              \'format\' => \'filtered_html\',
+              \'private\' => 0,
+              \'display_on\' => \'form\',
+            ),
+            \'required\' => \'0\',
+            \'weight\' => \'91\',
             \'page_num\' => 1,
           ),
           160 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'160\',
             \'pid\' => \'0\',
             \'form_key\' => \'row5\',
@@ -1820,7 +1842,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           161 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'161\',
             \'pid\' => \'160\',
             \'form_key\' => \'col51\',
@@ -1839,7 +1861,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           162 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'162\',
             \'pid\' => \'161\',
             \'form_key\' => \'zone_fieldset\',
@@ -1860,7 +1882,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           163 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'163\',
             \'pid\' => \'162\',
             \'form_key\' => \'row51\',
@@ -1877,7 +1899,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           164 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'164\',
             \'pid\' => \'163\',
             \'form_key\' => \'col52\',
@@ -1896,7 +1918,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           165 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'165\',
             \'pid\' => \'164\',
             \'form_key\' => \'priority_1\',
@@ -1927,7 +1949,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           166 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'166\',
             \'pid\' => \'164\',
             \'form_key\' => \'priority_2\',
@@ -1958,7 +1980,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           167 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'167\',
             \'pid\' => \'163\',
             \'form_key\' => \'col53\',
@@ -1977,7 +1999,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           168 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'168\',
             \'pid\' => \'167\',
             \'form_key\' => \'priority_3\',
@@ -2008,7 +2030,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           169 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'169\',
             \'pid\' => \'167\',
             \'form_key\' => \'priority_4\',
@@ -2039,7 +2061,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           170 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'170\',
             \'pid\' => \'167\',
             \'form_key\' => \'priority_5\',
@@ -2070,7 +2092,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           171 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'171\',
             \'pid\' => \'0\',
             \'form_key\' => \'row6\',
@@ -2087,7 +2109,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           172 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'172\',
             \'pid\' => \'171\',
             \'form_key\' => \'col61\',
@@ -2106,7 +2128,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           173 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'173\',
             \'pid\' => \'172\',
             \'form_key\' => \'additional_info\',
@@ -2130,7 +2152,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           174 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'174\',
             \'pid\' => \'173\',
             \'form_key\' => \'row61\',
@@ -2147,7 +2169,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           175 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'175\',
             \'pid\' => \'174\',
             \'form_key\' => \'col62\',
@@ -2166,7 +2188,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           176 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'176\',
             \'pid\' => \'175\',
             \'form_key\' => \'markup1\',
@@ -2183,7 +2205,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           177 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'177\',
             \'pid\' => \'175\',
             \'form_key\' => \'antal_rum_min\',
@@ -2214,7 +2236,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           178 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'178\',
             \'pid\' => \'175\',
             \'form_key\' => \'max\',
@@ -2245,7 +2267,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           179 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'179\',
             \'pid\' => \'174\',
             \'form_key\' => \'col63\',
@@ -2264,7 +2286,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           180 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'180\',
             \'pid\' => \'179\',
             \'form_key\' => \'markup\',
@@ -2281,7 +2303,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           181 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'181\',
             \'pid\' => \'179\',
             \'form_key\' => \'husleje_min\',
@@ -2314,7 +2336,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           182 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'182\',
             \'pid\' => \'179\',
             \'form_key\' => \'husleje_max\',
@@ -2347,7 +2369,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           183 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'183\',
             \'pid\' => \'179\',
             \'form_key\' => \'husdyr\',
@@ -2378,7 +2400,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           184 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'184\',
             \'pid\' => \'0\',
             \'form_key\' => \'row7\',
@@ -2395,7 +2417,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           185 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'185\',
             \'pid\' => \'184\',
             \'form_key\' => \'col71\',
@@ -2414,7 +2436,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           186 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'186\',
             \'pid\' => \'185\',
             \'form_key\' => \'agrements\',
@@ -2438,7 +2460,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           187 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'187\',
             \'pid\' => \'186\',
             \'form_key\' => \'is_confirmed\',
@@ -2469,7 +2491,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           188 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'188\',
             \'pid\' => \'0\',
             \'form_key\' => \'row8_5\',
@@ -2488,7 +2510,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           189 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'189\',
             \'pid\' => \'188\',
             \'form_key\' => \'col8_51\',
@@ -2505,7 +2527,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           190 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'190\',
             \'pid\' => \'189\',
             \'form_key\' => \'spacing1\',
@@ -2522,7 +2544,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           191 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'191\',
             \'pid\' => \'0\',
             \'form_key\' => \'row9\',
@@ -2539,7 +2561,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           192 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'192\',
             \'pid\' => \'191\',
             \'form_key\' => \'col81\',
@@ -2558,7 +2580,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           193 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'193\',
             \'pid\' => \'192\',
             \'form_key\' => \'tro_og_love_erklaering\',
@@ -2579,7 +2601,7 @@ function egbolig_webform_node_export_features_default() {
             \'page_num\' => 1,
           ),
           194 => array(
-            \'nid\' => 23,
+            \'nid\' => 47506,
             \'cid\' => \'194\',
             \'pid\' => \'193\',
             \'form_key\' => \'jeg_giver_herved_tro_og_love_erklaering_paa\',
@@ -2612,13 +2634,13 @@ function egbolig_webform_node_export_features_default() {
         ),
         \'conditionals\' => array(
           0 => array(
-            \'nid\' => \'23\',
+            \'nid\' => \'47506\',
             \'rgid\' => \'0\',
             \'andor\' => NULL,
             \'weight\' => \'-6\',
             \'rules\' => array(
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'0\',
                 \'rid\' => \'0\',
                 \'source_type\' => \'component\',
@@ -2629,7 +2651,7 @@ function egbolig_webform_node_export_features_default() {
             ),
             \'actions\' => array(
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'0\',
                 \'aid\' => \'0\',
                 \'target_type\' => \'component\',
@@ -2641,13 +2663,13 @@ function egbolig_webform_node_export_features_default() {
             ),
           ),
           1 => array(
-            \'nid\' => \'23\',
+            \'nid\' => \'47506\',
             \'rgid\' => \'1\',
             \'andor\' => NULL,
             \'weight\' => \'-5\',
             \'rules\' => array(
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'1\',
                 \'rid\' => \'0\',
                 \'source_type\' => \'component\',
@@ -2658,7 +2680,7 @@ function egbolig_webform_node_export_features_default() {
             ),
             \'actions\' => array(
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'1\',
                 \'aid\' => \'0\',
                 \'target_type\' => \'component\',
@@ -2670,13 +2692,13 @@ function egbolig_webform_node_export_features_default() {
             ),
           ),
           2 => array(
-            \'nid\' => \'23\',
+            \'nid\' => \'47506\',
             \'rgid\' => \'2\',
             \'andor\' => NULL,
             \'weight\' => \'-4\',
             \'rules\' => array(
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'2\',
                 \'rid\' => \'0\',
                 \'source_type\' => \'component\',
@@ -2687,7 +2709,7 @@ function egbolig_webform_node_export_features_default() {
             ),
             \'actions\' => array(
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'2\',
                 \'aid\' => \'0\',
                 \'target_type\' => \'component\',
@@ -2697,7 +2719,7 @@ function egbolig_webform_node_export_features_default() {
                 \'argument\' => \'\',
               ),
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'2\',
                 \'aid\' => \'1\',
                 \'target_type\' => \'component\',
@@ -2707,7 +2729,7 @@ function egbolig_webform_node_export_features_default() {
                 \'argument\' => \'\',
               ),
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'2\',
                 \'aid\' => \'2\',
                 \'target_type\' => \'component\',
@@ -2717,7 +2739,7 @@ function egbolig_webform_node_export_features_default() {
                 \'argument\' => \'\',
               ),
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'2\',
                 \'aid\' => \'3\',
                 \'target_type\' => NULL,
@@ -2729,13 +2751,13 @@ function egbolig_webform_node_export_features_default() {
             ),
           ),
           4 => array(
-            \'nid\' => \'23\',
+            \'nid\' => \'47506\',
             \'rgid\' => \'4\',
             \'andor\' => NULL,
             \'weight\' => \'-3\',
             \'rules\' => array(
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'4\',
                 \'rid\' => \'0\',
                 \'source_type\' => \'component\',
@@ -2746,7 +2768,7 @@ function egbolig_webform_node_export_features_default() {
             ),
             \'actions\' => array(
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'4\',
                 \'aid\' => \'0\',
                 \'target_type\' => \'component\',
@@ -2756,7 +2778,7 @@ function egbolig_webform_node_export_features_default() {
                 \'argument\' => \'\',
               ),
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'4\',
                 \'aid\' => \'1\',
                 \'target_type\' => \'component\',
@@ -2766,19 +2788,9 @@ function egbolig_webform_node_export_features_default() {
                 \'argument\' => \'\',
               ),
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'4\',
                 \'aid\' => \'2\',
-                \'target_type\' => \'component\',
-                \'target\' => \'157\',
-                \'invert\' => \'0\',
-                \'action\' => \'require\',
-                \'argument\' => \'\',
-              ),
-              array(
-                \'nid\' => \'23\',
-                \'rgid\' => \'4\',
-                \'aid\' => \'3\',
                 \'target_type\' => \'component\',
                 \'target\' => \'159\',
                 \'invert\' => \'0\',
@@ -2788,13 +2800,13 @@ function egbolig_webform_node_export_features_default() {
             ),
           ),
           5 => array(
-            \'nid\' => \'23\',
+            \'nid\' => \'47506\',
             \'rgid\' => \'5\',
             \'andor\' => NULL,
             \'weight\' => \'-2\',
             \'rules\' => array(
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'5\',
                 \'rid\' => \'0\',
                 \'source_type\' => \'component\',
@@ -2805,7 +2817,7 @@ function egbolig_webform_node_export_features_default() {
             ),
             \'actions\' => array(
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'5\',
                 \'aid\' => \'0\',
                 \'target_type\' => \'component\',
@@ -2815,7 +2827,7 @@ function egbolig_webform_node_export_features_default() {
                 \'argument\' => \'\',
               ),
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'5\',
                 \'aid\' => \'1\',
                 \'target_type\' => NULL,
@@ -2825,7 +2837,7 @@ function egbolig_webform_node_export_features_default() {
                 \'argument\' => \'\',
               ),
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'5\',
                 \'aid\' => \'2\',
                 \'target_type\' => NULL,
@@ -2837,13 +2849,13 @@ function egbolig_webform_node_export_features_default() {
             ),
           ),
           3 => array(
-            \'nid\' => \'23\',
+            \'nid\' => \'47506\',
             \'rgid\' => \'3\',
             \'andor\' => NULL,
             \'weight\' => \'-1\',
             \'rules\' => array(
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'3\',
                 \'rid\' => \'0\',
                 \'source_type\' => \'component\',
@@ -2854,11 +2866,69 @@ function egbolig_webform_node_export_features_default() {
             ),
             \'actions\' => array(
               array(
-                \'nid\' => \'23\',
+                \'nid\' => \'47506\',
                 \'rgid\' => \'3\',
                 \'aid\' => \'0\',
                 \'target_type\' => \'component\',
                 \'target\' => \'124\',
+                \'invert\' => \'0\',
+                \'action\' => \'show\',
+                \'argument\' => \'\',
+              ),
+            ),
+          ),
+          6 => array(
+            \'nid\' => \'47506\',
+            \'rgid\' => \'6\',
+            \'andor\' => NULL,
+            \'weight\' => \'0\',
+            \'rules\' => array(
+              array(
+                \'nid\' => \'47506\',
+                \'rgid\' => \'6\',
+                \'rid\' => \'0\',
+                \'source_type\' => \'component\',
+                \'source\' => \'155\',
+                \'operator\' => \'equal\',
+                \'value\' => \'1\',
+              ),
+            ),
+            \'actions\' => array(
+              array(
+                \'nid\' => \'47506\',
+                \'rgid\' => \'6\',
+                \'aid\' => \'0\',
+                \'target_type\' => \'component\',
+                \'target\' => \'159\',
+                \'invert\' => \'0\',
+                \'action\' => \'show\',
+                \'argument\' => \'\',
+              ),
+            ),
+          ),
+          7 => array(
+            \'nid\' => \'47506\',
+            \'rgid\' => \'7\',
+            \'andor\' => NULL,
+            \'weight\' => \'1\',
+            \'rules\' => array(
+              array(
+                \'nid\' => \'47506\',
+                \'rgid\' => \'7\',
+                \'rid\' => \'0\',
+                \'source_type\' => \'component\',
+                \'source\' => \'118\',
+                \'operator\' => \'not_equal\',
+                \'value\' => \'another\',
+              ),
+            ),
+            \'actions\' => array(
+              array(
+                \'nid\' => \'47506\',
+                \'rgid\' => \'7\',
+                \'aid\' => \'0\',
+                \'target_type\' => \'component\',
+                \'target\' => \'161\',
                 \'invert\' => \'0\',
                 \'action\' => \'show\',
                 \'argument\' => \'\',
