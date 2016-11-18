@@ -79,6 +79,11 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
           $form['submitted']['row1']['col1']['basic_data']['telefonnummer_mobil']['#default_value'] = $member->MobilePhone;
           $form['submitted']['row1']['col1']['basic_data']['c_o_addresse']['#default_value'] = $member->CoAddress;
           $form['submitted']['row1']['col1']['basic_data']['post_nr___by']['#default_value'] = $member->PostalCodeCity;
+          $form['submitted']['row3']['col31']['under_education']['row31']['col32']['institution_name']['#default_value'] = $member->EducationalInstitution;
+          $form['submitted']['row3']['col31']['under_education']['row31']['col32']['education_name']['#default_value'] = $member->Education;
+
+          $form['submitted']['row3']['col31']['under_education']['row31']['col33']['education_start_date']['#default_value'] = date('d/m/Y',strtotime($member->EducationStart));
+          $form['submitted']['row3']['col31']['under_education']['row31']['col34']['education_end_date']['#default_value'] = date('d/m/Y',strtotime($member->EducationEnd));
 
           $form['submitted']['row6']['col61']['additional_info']['row61']['col62']['husleje_min']['#default_value'] = $member->MinimumRent;
           $form['submitted']['row6']['col61']['additional_info']['row61']['col62']['husleje_max']['#default_value'] = $member->MaximumRent;
