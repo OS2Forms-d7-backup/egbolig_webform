@@ -1,9 +1,9 @@
 <?php
+
 /**
  * @file
  * Code for the Egbolig webform feature.
  */
-
 include_once 'egbolig_webform.features.inc';
 
 module_load_include('inc', 'egbolig_webform', 'includes/egbolig_webform.webservice');
@@ -59,42 +59,47 @@ function egbolig_webform_get_previous_submission_message($form, $form_state) {
 
 function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL) {
   //cannot fully use $form_id as it's dependent on node ID
+  $v = $form_state['values']['submitted'];
+  $tree = $form_state['webform']['component_tree']['children'];
   if (strpos($form_id, 'webform_client_form') > -1) {
     if ($form['#node']->type == 'webform' && $form['#node']->title == 'EG Bolig ansøgningskema') {
       $form['#attached']['css'][] = drupal_get_path('module', 'egbolig_webform') . '/css/egbolig_webform.css';
+      $form['#attached']['js'][] = drupal_get_path('module', 'egbolig_webform') . '/js/egbolig_webform.js';
       $cpr = $_GET['cpr'];
       if ($cpr) {
         //TODO: add security check that this user can access this CPR submitted data
         $member = egbolig_webform_ws_get_member_by_cpr($cpr);
         if ($member) {
           //saving for integrity
+          $childrenList = _egbolig_webform_get_children_by_member($member->MemberNo, $member->MemberCompanyNo);
           $form_state['hashcode'] = md5($cpr);
-
           $form['submitted']['row1']['col1']['basic_data']['cpr']['#default_value'] = $cpr;
-          $form['submitted']['row1']['col1']['basic_data']['cpr']['#attributes']['disabled'] = 'disabled';
-
+          $form['submitted']['row1']['col1']['basic_data']['cpr']['#attributes']['readonly'] = 'readonly';
           $form['submitted']['row1']['col1']['basic_data']['name']['#default_value'] = $member->Name;
           $form['submitted']['row1']['col1']['basic_data']['phone_nr']['#default_value'] = $member->HomePhone;
           $form['submitted']['row1']['col1']['basic_data']['addresse']['#default_value'] = $member->Address;
           $form['submitted']['row1']['col1']['basic_data']['telefonnummer_mobil']['#default_value'] = $member->MobilePhone;
           $form['submitted']['row1']['col1']['basic_data']['c_o_addresse']['#default_value'] = $member->CoAddress;
           $form['submitted']['row1']['col1']['basic_data']['post_nr___by']['#default_value'] = $member->PostalCodeCity;
-          $form['submitted']['row3']['col31']['under_education']['row31']['col32']['institution_name']['#default_value'] = $member->EducationalInstitution;
-          $form['submitted']['row3']['col31']['under_education']['row31']['col32']['education_name']['#default_value'] = $member->Education;
-
-          $form['submitted']['row3']['col31']['under_education']['row31']['col33']['education_start_date']['#default_value'] = date('d/m/Y',strtotime($member->EducationStart));
-          $form['submitted']['row3']['col31']['under_education']['row31']['col34']['education_end_date']['#default_value'] = date('d/m/Y',strtotime($member->EducationEnd));
-
+          if ($member->Children > 0)
+            $form['submitted']['row1']['col2']['more_info']['has_children'][1]['#default_value'] = true;
+          for ($i = 0; $i < count($childrenList); $i++) {
+            $field_index = (string) ($i + 1);
+            $form['submitted']['row2']['col21']['children_fieldset']['row21']['col22']['children']['child_cpr_nr_' . $field_index]['#default_value'] = $childrenList[$i]['Cpr6'] . $childrenList[$i]['Cpr4'];
+          }
           if ($member->Cpr62) {
             $form['submitted']['row2']['col21']['partner']['has_partner'][1]['#default_value'] = 1;
             $form['submitted']['row2']['col21']['partner']['parner_cpr_nr']['#default_value'] = $member->Cpr62;
           }
+          $form['submitted']['row3']['col31']['under_education']['row31']['col32']['institution_name']['#default_value'] = $member->EducationalInstitution;
+          $form['submitted']['row3']['col31']['under_education']['row31']['col32']['education_name']['#default_value'] = $member->Education;
+          $form['submitted']['row3']['col31']['under_education']['row31']['col33']['education_start_date']['#default_value'] = date('d/m/Y', strtotime($member->EducationStart));
+          $form['submitted']['row3']['col31']['under_education']['row31']['col34']['education_end_date']['#default_value'] = date('d/m/Y', strtotime($member->EducationEnd));
 
           $form['submitted']['row6']['col61']['additional_info']['row61']['col62']['husleje_min']['#default_value'] = $member->MinimumRent;
           $form['submitted']['row6']['col61']['additional_info']['row61']['col62']['husleje_max']['#default_value'] = $member->MaximumRent;
         }
-      }
-      else {
+      } else {
         $form['submitted']['row0']['col0']['previous_submission_message']['#prefix'] = '<div id="js-previous-submission-message">';
         $form['submitted']['row0']['col0']['previous_submission_message']['#suffix'] = '</div>';
 
@@ -114,7 +119,6 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
 
 function egbolig_webform_synch_submission($form, &$form_state) {
   $cpr = $form_state['values']['submitted'][_egbolig_webform_get_webform_cid($form_state['webform']['component_tree']['children'], 'cpr')];
-
   //updating submission
   if (isset($form_state['hashcode'])) {
     if ($form_state['hashcode'] === md5($cpr)) {
@@ -122,15 +126,13 @@ function egbolig_webform_synch_submission($form, &$form_state) {
         $member = egbolig_webform_ws_get_member_by_cpr($cpr);
         $member = egbolig_webform_populate_member($member, $form_state);
         egbolig_webform_ws_update_member($member);
-
+        egbolig_webform_ws_add_children($member, $form_state);
         drupal_set_message('Submission synched');
       } catch (Exception $e) {
         watchdog('EGBolig Webservice', $e->getMessage(), array(), WATCHDOG_ERROR);
-
         drupal_set_message('Could not synch the submission, see log', 'warning');
       }
-    }
-    else {
+    } else {
       //TODO: abort submission
       drupal_set_message(t('Integrity of the form is broken'), 'error');
     }
@@ -145,7 +147,7 @@ function egbolig_webform_synch_submission($form, &$form_state) {
       $member = egbolig_webform_ws_get_member_by_cpr($cpr);
       $member = egbolig_webform_populate_member($member, $form_state);
       egbolig_webform_ws_update_member($member);
-
+      egbolig_webform_ws_add_children($member, $form_state);
       drupal_set_message('Submission created');
     } catch (Exception $e) {
       watchdog('EGBolig Webservice', $e->getMessage(), array(), WATCHDOG_ERROR);

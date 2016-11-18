@@ -78,6 +78,32 @@ function egbolig_webform_ws_update_member($member) {
     _egbolig_webform_ws_update_partner($member_array);
   }
 }
+/**
+ * Updates the children via the webservice.
+ * Internally calls _egbolig_ws_update_education
+ */
+function egbolig_webform_ws_add_children($member, $form_state){
+  $v = $form_state['values']['submitted'];
+  $tree = $form_state['webform']['component_tree']['children'];
+  $childrenList = _egbolig_webform_get_children_by_member($member->MemberNo, $member->MemberCompanyNo);
+  $client = new SoapClient(variable_get('soap_webservice'));
+  for($i=1; $i<=10; $i++) {
+   $child_cpr = $v[_egbolig_webform_get_webform_cid($tree, 'child_cpr_nr_' . (string)$i)];
+   if (!empty($child_cpr) && !egbolig_webform_is_child_exists($child_cpr, $childrenList)){
+    $child =array (
+      'CompanyNo' => $member->MemberCompanyNo,
+      'Cpr4' => substr($child_cpr, -4),
+      'Cpr6' => substr($child_cpr, 0, 6),
+      'MemberNo' => $member->MemberNo,
+      'Name' => $member->Name
+      );
+   $response = $client->ChildAdd(
+    array(
+    'child' => $child)
+    );
+  }
+  }
+  }
 
 /**
  * Populates the member object with the values from the form submission.
@@ -106,21 +132,7 @@ function egbolig_webform_populate_member($member, $form_state) {
   $member->PostalCodeCity = $v[_egbolig_webform_get_webform_cid($tree, 'post_nr___by')];
   $member->Country = DEFAULT_COUNTRY;
   $member->Adults = 1 + $v[_egbolig_webform_get_webform_cid($tree, 'has_partner')][0]; //with or without the partner
-  $children = 0;
-  if ($v[_egbolig_webform_get_webform_cid($tree, 'has_children')][0]) { //Børn over eller under 23 år i husstanden
-    if ($v[_egbolig_webform_get_webform_cid($tree, 'child_cpr_nr')]
-      || $v[_egbolig_webform_get_webform_cid($tree, 'cpr_nr')]
-      || $v[_egbolig_webform_get_webform_cid($tree, 'child_birthday')]
-    ) {
-      $children++;
-    }
-    //counting adult child
-    // if ($v[_egbolig_webform_get_webform_cid($tree, 'adult_cpr_nr')]
-    //     || $v[_egbolig_webform_get_webform_cid($tree, 'adult_birthday')]) {
-    //       $children++;
-    // }
-  }
-  $member->Children = $children;
+
   $member->Education = $v[_egbolig_webform_get_webform_cid($tree, 'education_name')];
   $member->EducationStart = date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_start_date')])));
   $member->EducationEnd = date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')])));
@@ -129,9 +141,9 @@ function egbolig_webform_populate_member($member, $form_state) {
   $member->EducationalInstitution = $v[_egbolig_webform_get_webform_cid($tree, 'institution_name')];
   $member->MinimumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_min')];
   $member->MaximumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_max')];
-  //$member->Pet TODO: fix the Pets list
   if ($v[_egbolig_webform_get_webform_cid($tree, 'has_partner')])
      $member->Cpr62 = $v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')];
+  //$member->Pet TODO: fix the Pets list
 
   return $member;
 }
@@ -189,7 +201,6 @@ function _egbolig_webform_ws_update_partner($member) {
 ;
   $response = $client->MemberUpdatePartner($partner_array );
 }
-
 
 /**
  * Returns a list of education places from webservice
@@ -257,4 +268,32 @@ function profession_get_list() {
     $professionList[$prof->Id] = $prof->Name;
   }
   return $professionList;
+}
+
+/**
+ * Returns a list of children from webservice
+ *
+ * @return array of children
+ */
+function _egbolig_webform_get_children_by_member($memberNo, $companyNo) {
+  $childrenList = array();
+  $client = new SoapClient(variable_get('soap_webservice'));
+  $children = $client->ChildGetByMember(array('companyNo' => $companyNo, 'memberNo' => $memberNo))->ChildGetByMemberResult->Child;
+  if (is_array($children)){
+  foreach ($children as $child) {
+    $childrenList[] = array ('Cpr6' => $child->Cpr6, 'Cpr4' => $child->Cpr4);
+  }}
+  else $childrenList[] = array ('Cpr6' => $children->Cpr6, 'Cpr4' => $children->Cpr4);
+
+  return $childrenList;
+}
+/*
+ * checks if child added to the member
+ */
+function egbolig_webform_is_child_exists($child_cpr, $childrenList){
+  foreach ($childrenList as $child){
+    if ($child['Cpr4'] == substr($child_cpr, -4) &&  $child['Cpr6'] == substr($child_cpr, 0, 6))
+      return TRUE;
+  }
+  return FALSE;
 }
