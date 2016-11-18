@@ -61,6 +61,7 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
   //cannot fully use $form_id as it's dependent on node ID
   if (strpos($form_id, 'webform_client_form') > -1) {
     if ($form['#node']->type == 'webform' && $form['#node']->title == 'EG-Bolig ansøgningsskema') {
+      $form['#attached']['css'][] = drupal_get_path('module', 'egbolig_webform') . '/css/egbolig_webform.css';
       $cpr = $_GET['cpr'];
       if ($cpr) {
         //TODO: add security check that this user can access this CPR submitted data
