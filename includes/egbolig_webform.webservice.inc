@@ -145,6 +145,7 @@ function egbolig_webform_populate_member($member, $form_state) {
   $member->EducationalInstitution = $v[_egbolig_webform_get_webform_cid($tree, 'institution_name')];
   $member->MinimumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_min')];
   $member->MaximumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_max')];
+  $member->Criteria1 = $v[_egbolig_webform_get_webform_cid($tree, 'status')];
   if ($v[_egbolig_webform_get_webform_cid($tree, 'has_partner')])
     $member->Cpr62 = $v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')];
   //$member->Pet TODO: fix the Pets list

@@ -558,7 +558,7 @@ function egbolig_webform_node_export_features_default() {
               \'aslist\' => 1,
               \'empty_option\' => \'VÃ¦lg mellem\',
               \'other_option\' => 0,
-              \'items\' => "working|Ballerup borger - i job\\nnonballerup_worker|Tilpendler - i job\\nanother|Ballerup borger - uden arbejde\\nstudent|Ballerup borger - under uddannelse\\nnonballerup_student|Tilpendler - under uddannelse\\n1|Ballerup borger - over 60 Ã¥r\\n",
+              \'items\' => "4|Ballerupborger i job\n5|Tilpendler i job\n11|Ballerupborger uden beskæftigelse\n8|Ballerupborger i uddannelse\n12|Tilpendler i uddannelse\n6|Øvrige i job\n13|Øvrige i uddannelse\n",
               \'multiple\' => 0,
               \'custom_keys\' => 0,
               \'encrypt\' => 0,
