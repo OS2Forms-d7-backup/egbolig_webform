@@ -125,7 +125,9 @@ function egbolig_webform_populate_member($member, $form_state) {
     $member->Password = DEFAULT_PASSWORD;
     $member->OfferByEmail = DEFAULT_OFFER_BY_EMAIL;
     $member->CprNo = $v[_egbolig_webform_get_webform_cid($tree, 'cpr')];
+    $member->MemberNo = $v[_egbolig_webform_get_webform_cid($tree, 'cpr')];
   }
+  $member->MemberNo = $v[_egbolig_webform_get_webform_cid($tree, 'cpr')];
   $member->Name = $v[_egbolig_webform_get_webform_cid($tree, 'name')];
   $member->Address = $v[_egbolig_webform_get_webform_cid($tree, 'addresse')];
   $member->HomePhone = $v[_egbolig_webform_get_webform_cid($tree, 'phone_nr')];
