@@ -146,8 +146,10 @@ function egbolig_webform_populate_member($member, $form_state) {
   $member->MinimumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_min')];
   $member->MaximumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_max')];
   $member->Criteria1 = $v[_egbolig_webform_get_webform_cid($tree, 'status')];
-  if ($v[_egbolig_webform_get_webform_cid($tree, 'has_partner')])
-    $member->Cpr62 = $v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')];
+  if ($v[_egbolig_webform_get_webform_cid($tree, 'has_partner')]){
+    $member->Cpr62 = substr($v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')], 0, 6);
+    $member->Cpr42 = substr($v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')], -4);
+  }
   //$member->Pet TODO: fix the Pets list
 
   return $member;
@@ -201,7 +203,8 @@ function _egbolig_webform_ws_update_partner($member) {
     'memberCompanyNo' => $member['MemberCompanyNo'],
     'memberNo' => $member['MemberNo'],
     'name' => $member['Name'],
-    'cpr62' => $member['Cpr62']
+    'cpr62' => substr($member['Cpr62'], 0, 6),
+    'cpr42' => substr($member['Cpr42'], -4),
   );
   ;
   $response = $client->MemberUpdatePartner($partner_array);
