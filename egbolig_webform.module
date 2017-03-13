@@ -82,11 +82,12 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
           $form['submitted']['row1']['col1']['basic_data']['c_o_addresse']['#default_value'] = $member->CoAddress;
           $form['submitted']['row1']['col1']['basic_data']['post_nr___by']['#default_value'] = $member->PostalCodeCity;
           $form['submitted']['row1']['col2']['status']['#default_value'] = (int) $member->Criteria1;
-          if ($member->Children > 0)
-            $form['submitted']['row1']['col2']['more_info']['has_children'][1]['#default_value'] = true;
-          for ($i = 0; $i < count($childrenList); $i++) {
-            $field_index = (string) ($i + 1);
-            $form['submitted']['row2']['col21']['children_fieldset']['row21']['col22']['children']['child_cpr_nr_' . $field_index]['#default_value'] = $childrenList[$i]['Cpr6'] . $childrenList[$i]['Cpr4'];
+          if ($member->Children > 0) {
+            $form['submitted']['row2']['col21']['more_info']['has_children'][1]['#default_value'] = true;
+            for ($i = 0; $i < count($childrenList); $i++) {
+              $field_index = (string) ($i + 1);
+              $form['submitted']['row2']['col21']['children_fieldset']['row21']['col22']['children']['child_cpr_nr_' . $field_index]['#default_value'] = $childrenList[$i]['Cpr6'] . $childrenList[$i]['Cpr4'];
+            }
           }
           if ($member->Cpr62) {
             $form['submitted']['row2']['col21']['partner']['has_partner'][1]['#default_value'] = 1;
