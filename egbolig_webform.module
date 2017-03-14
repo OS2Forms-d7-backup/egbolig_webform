@@ -62,7 +62,7 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
   $v = $form_state['values']['submitted'];
   $tree = $form_state['webform']['component_tree']['children'];
   if (strpos($form_id, 'webform_client_form') > -1) {
-    if ($form['#node']->type == 'webform' && $form['#node']->title == 'EG Bolig ansøgningskema') {
+    if ($form['#node']->type == 'webform' && $form['#node']->title == 'EG Bolig ansÃ¸gningskema') {
       $form['#attached']['css'][] = drupal_get_path('module', 'egbolig_webform') . '/css/egbolig_webform.css';
       $form['#attached']['js'][] = drupal_get_path('module', 'egbolig_webform') . '/js/egbolig_webform.js';
       $cpr = $_GET['cpr'];
@@ -78,7 +78,7 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
           $form['submitted']['row1']['col1']['basic_data']['name']['#default_value'] = $member->Name;
           $form['submitted']['row1']['col2']['phone_nr']['#default_value'] = $member->HomePhone;
           $form['submitted']['row1']['col1']['basic_data']['addresse']['#default_value'] = $member->Address;
-          $form['submitted']['row1']['col2']['telefonnummer_mobil']['#default_value'] = $member->MobilePhone
+          $form['submitted']['row1']['col2']['telefonnummer_mobil']['#default_value'] = $member->MobilePhone;
           $form['submitted']['row1']['col1']['basic_data']['c_o_addresse']['#default_value'] = $member->CoAddress;
           $form['submitted']['row1']['col1']['basic_data']['post_nr___by']['#default_value'] = $member->PostalCodeCity;
           $form['submitted']['row1']['col2']['status']['#default_value'] = (int) $member->Criteria1;
