@@ -46,11 +46,13 @@ function egbolig_webform_get_previous_submission_message($form, $form_state) {
 
   $message = '';
   if ($member) {
-    $edit_link = l(t('Edit'), $base_root . $form['#action'], [
-      'query' => ['cpr' => $cpr],
-      'attributes' => ['target' => '_blank']
-    ]);
-    $message = "<p>Submission for $cpr exists. $edit_link / Delete it</p>";
+    $edit_url = url($base_root . $form['#action'], array('query' => array('cpr' => $cpr)));
+    $message = "
+    <script>
+        window.location = '$edit_url';
+    </script>";
+
+    drupal_set_message(t('Du har i forvejen en sag. Din sag er blevet hentet ind og du kan rette i den'));
   }
   $command = ajax_command_html('#js-previous-submission-message', $message);
 
