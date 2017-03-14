@@ -84,6 +84,9 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
           $form['submitted']['row1']['col1']['basic_data']['c_o_addresse']['#default_value'] = $member->CoAddress;
           $form['submitted']['row1']['col1']['basic_data']['post_nr___by']['#default_value'] = $member->PostalCodeCity;
           $form['submitted']['row1']['col2']['status']['#default_value'] = (int) $member->Criteria1;
+          if ($member->Criteria2) {
+            $form['submitted']['row4']['col41']['nuvaerende_situation']['row41']['col43']['arsog']['#default_value'] = (int) $member->Criteria2;
+          }
           if ($member->Children > 0) {
             $form['submitted']['row2']['col21']['more_info']['has_children'][1]['#default_value'] = true;
             for ($i = 0; $i < count($childrenList); $i++) {

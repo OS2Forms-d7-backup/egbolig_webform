@@ -151,11 +151,12 @@ function egbolig_webform_populate_member($member, $form_state) {
   $member->MaximumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_max')];
   $member->Pet = $v[_egbolig_webform_get_webform_cid($tree, 'husdyr')];
   $member->Criteria1 = $v[_egbolig_webform_get_webform_cid($tree, 'status')];
-
+  if ($v[_egbolig_webform_get_webform_cid($tree, 'status')] == 11) {
+    $member->Criteria2 = $v[_egbolig_webform_get_webform_cid($tree, 'arsog')];
+  }
   if ((int)$v[_egbolig_webform_get_webform_cid($tree, 'has_partner')][0]){
     $member->Cpr62 = $v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')];
   }
-  dpm($member->Cpr62);
   //$member->Pet TODO: fix the Pets list
 
   return $member;
