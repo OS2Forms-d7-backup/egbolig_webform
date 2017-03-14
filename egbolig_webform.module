@@ -93,18 +93,19 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
           }
           if ($member->Cpr62) {
             $form['submitted']['row1']['col2']['partner']['has_partner'][1]['#default_value'] = 1;
-            $form['submitted']['row1']['col2']['partner']['parner_cpr_nr']['#default_value'] = $member->Cpr62 . $member->Cpr42;
+            $form['submitted']['row1']['col2']['partner']['parner_cpr_nr']['#default_value'] = $member->Cpr62;
           }
           $form['submitted']['row3']['col31']['under_education']['row31']['col32']['institution_name']['#default_value'] = $member->EducationalInstitution;
           $form['submitted']['row3']['col31']['under_education']['row31']['col32']['education_name']['#default_value'] = $member->Education;
           $form['submitted']['row3']['col31']['under_education']['row31']['col33']['education_start_date']['#default_value'] = date('d/m/Y', strtotime($member->EducationStart));
           $form['submitted']['row3']['col31']['under_education']['row31']['col34']['education_end_date']['#default_value'] = date('d/m/Y', strtotime($member->EducationEnd));
 
-          $form['submitted']['row6']['col61']['additional_info']['row61']['col62']['husleje_min']['#default_value'] = $member->MinimumRent;
-          $form['submitted']['row6']['col61']['additional_info']['row61']['col62']['husleje_max']['#default_value'] = $member->MaximumRent;
+          $form['submitted']['row6']['col61']['additional_info']['row61']['col63']['husleje_max']['#default_value'] = $member->MaximumRent;
+          $form['submitted']['row6']['col61']['additional_info']['row61']['col63']['husdyr']['#default_value'] = $member->Pet;
+
           $form['submitted']['row7']['col71']['agrements']['is_confirmed'][1]['#default_value'] = true;
           $form['submitted']['row9']['col81']['tro_og_love_erklaering']['jeg_giver_herved_tro_og_love_erklaering_paa'][1]['#default_value'] = true;
-          }
+         }
       } else {
         $form['submitted']['row0']['col0']['previous_submission_message']['#prefix'] = '<div id="js-previous-submission-message">';
         $form['submitted']['row0']['col0']['previous_submission_message']['#suffix'] = '</div>';

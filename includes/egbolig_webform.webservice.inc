@@ -67,13 +67,18 @@ function egbolig_webform_ws_update_member($member) {
   unset($member_array['EgdiNo']);
 
   $client = new SoapClient(variable_get('soap_webservice'));
-
+//update member
   $response = $client->MemberUpdate(
     array(
       'member' => $member_array,
     )
   );
-
+  //update criteria
+  $response = $client->MemberUpdateCriterias(
+    array(
+      'member' => $member_array,
+    )
+  );
   _egbolig_webform_ws_update_education($member_array);
   if (isset($member->Cpr62)) {
     _egbolig_webform_ws_update_partner($member_array);
@@ -143,13 +148,14 @@ function egbolig_webform_populate_member($member, $form_state) {
   $member->EducationExpectedEnd = date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')])));
   $member->EducationDocumentationReceived = ($v[_egbolig_webform_get_webform_cid($tree, 'education_doc')] > 0); //TODO: not working with WS
   $member->EducationalInstitution = $v[_egbolig_webform_get_webform_cid($tree, 'institution_name')];
-  $member->MinimumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_min')];
   $member->MaximumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_max')];
+  $member->Pet = $v[_egbolig_webform_get_webform_cid($tree, 'husdyr')];
   $member->Criteria1 = $v[_egbolig_webform_get_webform_cid($tree, 'status')];
-  if ($v[_egbolig_webform_get_webform_cid($tree, 'has_partner')]){
-    $member->Cpr62 = substr($v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')], 0, 6);
-    $member->Cpr42 = substr($v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')], -4);
+
+  if ((int)$v[_egbolig_webform_get_webform_cid($tree, 'has_partner')][0]){
+    $member->Cpr62 = $v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')];
   }
+  dpm($member->Cpr62);
   //$member->Pet TODO: fix the Pets list
 
   return $member;
@@ -203,8 +209,7 @@ function _egbolig_webform_ws_update_partner($member) {
     'memberCompanyNo' => $member['MemberCompanyNo'],
     'memberNo' => $member['MemberNo'],
     'name' => $member['Name'],
-    'cpr62' => substr($member['Cpr62'], 0, 6),
-    'cpr42' => substr($member['Cpr42'], -4),
+    'cpr62' => $member['Cpr62']
   );
   ;
   $response = $client->MemberUpdatePartner($partner_array);
