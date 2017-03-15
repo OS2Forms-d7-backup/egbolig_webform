@@ -96,7 +96,7 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
           }
           if ($member->Cpr62) {
             $form['submitted']['row1']['col2']['partner']['has_partner'][1]['#default_value'] = 1;
-            $form['submitted']['row1']['col2']['partner']['parner_cpr_nr']['#default_value'] = $member->Cpr62;
+            $form['submitted']['row1']['col2']['partner']['parner_cpr_nr']['#default_value'] = $member->Cpr62 . $member->Cpr42;
           }
           $form['submitted']['row3']['col31']['under_education']['row31']['col32']['institution_name']['#default_value'] = $member->EducationalInstitution;
           $form['submitted']['row3']['col31']['under_education']['row31']['col32']['education_name']['#default_value'] = $member->Education;
