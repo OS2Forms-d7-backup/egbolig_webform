@@ -331,7 +331,7 @@ function egbolig_webform_ws_add_wishes($member, $form_state) {
     'memberCompanyNo' => $member->MemberCompanyNo,
   ));
 
-  for ($i = 1; $i <= 5; $i++) {
+  for ($i = 1; $i <= 4; $i++) {
     // get region IDs
     $regionNo = $v[_egbolig_webform_get_webform_cid($tree, 'priority_' . (string) $i)];
     if (!empty($regionNo)) {
