@@ -341,23 +341,18 @@ function egbolig_webform_ws_add_wishes($member, $form_state) {
      $response = $client->DepartmentGetListByRegion($departments_array);
      foreach ($response->DepartmentGetListByRegionResult->Department as $key => $department) {
        for ($j=$minRoom; $j<=$maxRoom; $j++ ) {
-         $wishes[] = array ('Wish' => array(
+         $wishes[] = array(
           'CompanyNo' => $department->CompanyNo,
           'MemberCompanyNo' => $member->MemberCompanyNo,
           'DepartmentNo' => $department->DepartmentNo,
           'Room' => $j,
           'MemberNo' => $member->MemberNo,
           'TenancyType' => 1
-         ));
-
-       /* $wish_response = $client->WishAdd(array(
-          'wish' => $wish)
-        );*/
-
+         );
        }
      }
    }
-  }  
+  }
   $wish_response = $client->WishAddList(array(
           'wishes' => $wishes)
     );
