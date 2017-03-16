@@ -312,3 +312,53 @@ function egbolig_webform_is_child_exists($child_cpr, $childrenList) {
   }
   return FALSE;
 }
+
+/**
+ * Added wishes
+ *
+ */
+function egbolig_webform_ws_add_wishes($member, $form_state) {
+  $v = $form_state['values']['submitted'];
+  $tree = $form_state['webform']['component_tree']['children'];
+  $client = new SoapClient(variable_get('soap_webservice'));
+  $minRoom = (int) $v[_egbolig_webform_get_webform_cid($tree, 'antal_rum_min')];
+  $maxRoom = (int) $v[_egbolig_webform_get_webform_cid($tree, 'antal_rum_max')];
+  $wishes = array();
+  //delete all wishes before add
+
+  $response = $client->WishDeleteByMember(array(
+    'memberNo' => $member->MemberNo,
+    'memberCompanyNo' => $member->MemberCompanyNo,
+  ));
+
+  for ($i = 1; $i <= 5; $i++) {
+    // get region IDs
+    $regionNo = $v[_egbolig_webform_get_webform_cid($tree, 'priority_' . (string) $i)];
+    if (!empty($regionNo)) {
+      $departments_array = array(
+        'regionNo' => $regionNo
+     );
+     $response = $client->DepartmentGetListByRegion($departments_array);
+     foreach ($response->DepartmentGetListByRegionResult->Department as $key => $department) {
+       for ($j=$minRoom; $j<=$maxRoom; $j++ ) {
+         $wishes[] = array ('Wish' => array(
+          'CompanyNo' => $department->CompanyNo,
+          'MemberCompanyNo' => $member->MemberCompanyNo,
+          'DepartmentNo' => $department->DepartmentNo,
+          'Room' => $j,
+          'MemberNo' => $member->MemberNo,
+          'TenancyType' => 1
+         ));
+
+       /* $wish_response = $client->WishAdd(array(
+          'wish' => $wish)
+        );*/
+
+       }
+     }
+   }
+  }  
+  $wish_response = $client->WishAddList(array(
+          'wishes' => $wishes)
+    );
+}

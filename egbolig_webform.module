@@ -136,7 +136,9 @@ function egbolig_webform_synch_submission($form, &$form_state) {
         $member = egbolig_webform_ws_get_member_by_cpr($cpr);
         $member = egbolig_webform_populate_member($member, $form_state);
         egbolig_webform_ws_update_member($member);
+       
         egbolig_webform_ws_add_children($member, $form_state);
+        egbolig_webform_ws_add_wishes($member, $form_state);
         drupal_set_message('Submission synched');
       } catch (Exception $e) {
         watchdog('EGBolig Webservice', $e->getMessage(), array(), WATCHDOG_ERROR);
