@@ -65,7 +65,6 @@ function egbolig_webform_ws_update_member($member) {
   $member_array = (array) $member;
   //unsetting the EdgiNo, this sabotages the submission
   unset($member_array['EgdiNo']);
-
   $client = new SoapClient(variable_get('soap_webservice'));
 //update member
   $response = $client->MemberUpdate(
@@ -80,9 +79,6 @@ function egbolig_webform_ws_update_member($member) {
     )
   );
   _egbolig_webform_ws_update_education($member_array);
-  if (isset($member->Cpr62)) {
-    _egbolig_webform_ws_update_partner($member_array);
-  }
 }
 
 /**
@@ -154,10 +150,8 @@ function egbolig_webform_populate_member($member, $form_state) {
   if ($v[_egbolig_webform_get_webform_cid($tree, 'status')] == 11) {
     $member->Criteria2 = $v[_egbolig_webform_get_webform_cid($tree, 'arsog')];
   }
-  if ((int)$v[_egbolig_webform_get_webform_cid($tree, 'has_partner')][0]){
-    $member->Cpr62 = substr($v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')], 0, 6);
-    $member->Cpr42 = substr($v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')], -4);
-  }
+
+
   //$member->Pet TODO: fix the Pets list
 
   return $member;
@@ -205,17 +199,24 @@ function _egbolig_webform_ws_update_education($member) {
  * Updates the member partner via the webservice.
  *
  */
-function _egbolig_webform_ws_update_partner($member) {
-  $client = new SoapClient(variable_get('soap_webservice'));
-  $partner_array = array(
-    'memberCompanyNo' => $member['MemberCompanyNo'],
-    'memberNo' => $member['MemberNo'],
-    'name' => $member['Name'],
-    'cpr62' => substr($member['Cpr62'], 0, 6),
-    'cpr42' => substr($member['Cpr42'], -4),
-  );
-  ;
+function _egbolig_webform_ws_update_partner($member, $form_state) {
+  $v = $form_state['values']['submitted'];
+  $tree = $form_state['webform']['component_tree']['children'];
+  if ((int)$v[_egbolig_webform_get_webform_cid($tree, 'has_partner')][0]){
+    $member->Cpr62 = substr($v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')], 0, 6);
+    $member->Cpr42 = substr($v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')], -4);
+
+    $client = new SoapClient(variable_get('soap_webservice'));
+    $partner_array = array(
+      'memberCompanyNo' => $member->MemberCompanyNo,
+      'memberNo' => $member->MemberNo,
+      'name' => $member->Name,
+      'cpr62' => substr($member->Cpr62, 0, 6),
+      'cpr42' => substr($member->Cpr42, -4),
+    );
+
   $response = $client->MemberUpdatePartner($partner_array);
+  }
 }
 
 /**
