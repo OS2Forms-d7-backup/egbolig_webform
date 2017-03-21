@@ -39,7 +39,7 @@ function egbolig_webform_node_export_features_default() {
       \'revision_uid\' => \'1\',
       \'status\' => \'1\',
       \'sticky\' => \'0\',
-      \'title\' => \'EG Bolig ansøgningskema\',
+      \'title\' => \'Ansøgning om bolig i Ballerup Kommune\',
       \'tnid\' => \'0\',
       \'translate\' => \'0\',
       \'type\' => \'webform\',
@@ -49,7 +49,7 @@ function egbolig_webform_node_export_features_default() {
       \'vuuid\' => \'1ea24e29-e571-4b6b-ba28-93eb54499e03\',
       \'webform\' => array(
         \'nid\' => \'47506\',
-        \'next_serial\' => \'350\',
+        \'next_serial\' => \'371\',
         \'confirmation\' => "Tak for din henvendelse. \\r\\nBallerup Kommune, Boligkontoret har nu modtaget din ansøgning. Du vil blive kontaktet, såfremt der mangler yderligere oplysninger.\\r\\nInden for kort tid vil du modtage en kopi af din ansøgning i din digitale postkasse. Hvis du er fritaget for digital post, vil du modtage et brev.\\r\\nVi skal gøre opmærksom på, at du ikke øger dine chancer for at få en bolig ved at ringe til Boligkontoret. \\r\\nI stedet vil vi bede dig om at vedligeholde din ansøgning, så ændringer i dine personlige forhold opdateres. \\r\\nPå den måde er du med til at sikre, at oplysningerne om dit boligbehov er opdateret. Hvis du skal ændre i din ansøgning, skal du logge på igen for at lave ændringerne.\\r\\nNår vi har et tilbud om bolig til dig, vil du modtage et brev i din digitale postkasse. Hvis du er fritaget for digital post, vil du modtage et brev.  \\r\\n\\r\\nMed venlig hilsen\\r\\nBoligkontoret\\r\\nBallerup Kommune\\r\\n",
         \'confirmation_format\' => \'plain_text\',
         \'redirect_url\' => \'<confirmation>\',

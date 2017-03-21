@@ -64,7 +64,7 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
   $v = $form_state['values']['submitted'];
   $tree = $form_state['webform']['component_tree']['children'];
   if (strpos($form_id, 'webform_client_form') > -1) {
-    if ($form['#node']->type == 'webform' && $form['#node']->title == 'EG Bolig ansøgningskema') {
+    if ($form['#node']->type == 'webform' && $form['#node']->title == 'Ansøgning om bolig i Ballerup Kommune') {
       $form['#attached']['css'][] = drupal_get_path('module', 'egbolig_webform') . '/css/egbolig_webform.css';
       $form['#attached']['js'][] = drupal_get_path('module', 'egbolig_webform') . '/js/egbolig_webform.js';
       $cpr = $_GET['cpr'];
