@@ -11,6 +11,10 @@ define('DEFAULT_STATUS', 0);
 define('DEFAULT_TENANCY_TYPE', 1);
 define('DEFAULT_TYPE_UPDATE', 'I');
 define('DEFAULT_TYPE_CREATE', 'A');
+define('DEFAULT_MIN_FLOOR', 1);
+define('DEFAULT_MAX_FLOOR', 99);
+define('DEFAULT_MIN_SQM', 1);
+define('DEFAULT_MAX_SQM', 9999);
 
 /**
  * Gets a member object from the webservice based on CPR
@@ -347,6 +351,10 @@ function egbolig_webform_ws_add_wishes($member, $form_state) {
           'MemberCompanyNo' => $member->MemberCompanyNo,
           'DepartmentNo' => $department->DepartmentNo,
           'Room' => $j,
+          'FloorMax' => DEFAULT_MAX_FLOOR,
+          'FloorMix' => DEFAULT_MIN_FLOOR,
+          'SqmMax' => DEFAULT_MAX_SQM,
+          'SqmMin' => DEFAULT_MIN_SQM,
           'MemberNo' => $member->MemberNo,
           'TenancyType' => 1
          );
