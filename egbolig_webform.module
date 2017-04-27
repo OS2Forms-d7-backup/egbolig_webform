@@ -83,6 +83,7 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
           $form['submitted']['row1']['col2']['telefonnummer_mobil']['#default_value'] = $member->MobilePhone;
           $form['submitted']['row1']['col1']['basic_data']['c_o_addresse']['#default_value'] = $member->CoAddress;
           $form['submitted']['row1']['col1']['basic_data']['post_nr___by']['#default_value'] = $member->PostalCodeCity;
+          $form['submitted']['row1']['col1']['basic_data']['email']['#default_value'] = $member->Email;
           $form['submitted']['row1']['col2']['status']['#default_value'] = (int) $member->Criteria1;
           if ($member->Criteria2) {
             $form['submitted']['row4']['col41']['nuvaerende_situation']['row41']['col43']['arsog']['#default_value'] = (int) $member->Criteria2;
