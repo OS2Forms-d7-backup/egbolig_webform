@@ -275,11 +275,11 @@ function _egbolig_webform_get_webform_cid($tree, $form_key) {
  */
 function profession_get_list() {
   $professionList = array();
-  $client = new SoapClient(variable_get('soap_webservice'));
+  /*$client = new SoapClient(variable_get('soap_webservice'));
   $professions = $client->ProfessionGetList()->ProfessionGetListResult->Profession;
   foreach ($professions as $prof) {
     $professionList[$prof->Id] = $prof->Name;
-  }
+  }*/
   return $professionList;
 }
 
