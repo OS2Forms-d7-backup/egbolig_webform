@@ -39,7 +39,7 @@ function egbolig_webform_node_export_features_default() {
       \'revision_uid\' => \'1\',
       \'status\' => \'1\',
       \'sticky\' => \'0\',
-      \'title\' => \'Ansøgning om bolig i Ballerup Kommune\',
+      \'title\' => \'Boligansøgningsformular\',
       \'tnid\' => \'0\',
       \'translate\' => \'0\',
       \'type\' => \'webform\',
