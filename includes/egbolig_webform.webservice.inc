@@ -65,13 +65,16 @@ function egbolig_webform_ws_update_member($member) {
   $member_array = (array) $member;
   //unsetting the EdgiNo, this sabotages the submission
   unset($member_array['EgdiNo']);
+
   $client = new SoapClient(variable_get('soap_webservice'));
-//update member
+
+  //update member
   $response = $client->MemberUpdate(
     array(
       'member' => $member_array,
     )
   );
+
   //update criteria
   $response = $client->MemberUpdateCriterias(
     array(
@@ -128,7 +131,6 @@ function egbolig_webform_populate_member($member, $form_state) {
     $member->CprNo = $v[_egbolig_webform_get_webform_cid($tree, 'cpr')];
     $member->MemberNo = $v[_egbolig_webform_get_webform_cid($tree, 'cpr')];
   }
-  $member->MemberNo = $v[_egbolig_webform_get_webform_cid($tree, 'cpr')];
   $member->Name = $v[_egbolig_webform_get_webform_cid($tree, 'name')];
   $member->Address = $v[_egbolig_webform_get_webform_cid($tree, 'addresse')];
   $member->HomePhone = $v[_egbolig_webform_get_webform_cid($tree, 'phone_nr')];
@@ -275,11 +277,11 @@ function _egbolig_webform_get_webform_cid($tree, $form_key) {
  */
 function profession_get_list() {
   $professionList = array();
-  /*$client = new SoapClient(variable_get('soap_webservice'));
+  $client = new SoapClient(variable_get('soap_webservice'));
   $professions = $client->ProfessionGetList()->ProfessionGetListResult->Profession;
   foreach ($professions as $prof) {
     $professionList[$prof->Id] = $prof->Name;
-  }*/
+  }
   return $professionList;
 }
 
@@ -332,29 +334,40 @@ function egbolig_webform_ws_add_wishes($member, $form_state) {
     'memberCompanyNo' => $member->MemberCompanyNo,
   ));
 
+  $submittedRegions = array();
   for ($i = 1; $i <= 4; $i++) {
     // get region IDs
     $regionNo = $v[_egbolig_webform_get_webform_cid($tree, 'priority_' . (string) $i)];
     if (!empty($regionNo)) {
+
+      //skipping duplicates
+      if (!in_array($regionNo, $submittedRegions)) {
+        $submittedRegions[] = $regionNo;
+      }
+      else {
+        continue;
+      }
+
       $departments_array = array(
         'regionNo' => $regionNo
-     );
-     $response = $client->DepartmentGetListByRegion($departments_array);
-     foreach ($response->DepartmentGetListByRegionResult->Department as $key => $department) {
-       for ($j=$minRoom; $j<=$maxRoom; $j++ ) {
-         $wishes[] = array(
-          'CompanyNo' => $department->CompanyNo,
-          'MemberCompanyNo' => $member->MemberCompanyNo,
-          'DepartmentNo' => $department->DepartmentNo,
-          'Room' => $j,
-          'MemberNo' => $member->MemberNo,
-          'TenancyType' => 1
-         );
-       }
-     }
-   }
+      );
+      $response = $client->DepartmentGetListByRegion($departments_array);
+      foreach ($response->DepartmentGetListByRegionResult->Department as $key => $department) {
+        for ($j = $minRoom; $j <= $maxRoom; $j++) {
+          $wishes[] = array(
+            'CompanyNo' => $department->CompanyNo,
+            'MemberCompanyNo' => $member->MemberCompanyNo,
+            'DepartmentNo' => $department->DepartmentNo,
+            'Room' => $j,
+            'MemberNo' => $member->MemberNo,
+            'TenancyType' => 1
+          );
+        }
+      }
+    }
   }
   $wish_response = $client->WishAddList(array(
-          'wishes' => $wishes)
-    );
+      'wishes' => $wishes
+    )
+  );
 }
