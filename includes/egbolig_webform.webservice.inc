@@ -11,6 +11,10 @@ define('DEFAULT_STATUS', 0);
 define('DEFAULT_TENANCY_TYPE', 1);
 define('DEFAULT_TYPE_UPDATE', 'I');
 define('DEFAULT_TYPE_CREATE', 'A');
+define('DEFAULT_MIN_FLOOR', 1);
+define('DEFAULT_MAX_FLOOR', 99);
+define('DEFAULT_MIN_SQM', 1);
+define('DEFAULT_MAX_SQM', 9999);
 
 /**
  * Gets a member object from the webservice based on CPR
@@ -125,12 +129,12 @@ function egbolig_webform_populate_member($member, $form_state) {
   if ($member == NULL) {
     $member = new stdClass();
     //TODO: check default fields
-    $member->Email = DEFAULT_EMAIL;
     $member->Password = DEFAULT_PASSWORD;
     $member->OfferByEmail = DEFAULT_OFFER_BY_EMAIL;
     $member->CprNo = $v[_egbolig_webform_get_webform_cid($tree, 'cpr')];
     $member->MemberNo = $v[_egbolig_webform_get_webform_cid($tree, 'cpr')];
   }
+  $member->Email =  $v[_egbolig_webform_get_webform_cid($tree, 'email')];
   $member->Name = $v[_egbolig_webform_get_webform_cid($tree, 'name')];
   $member->Address = $v[_egbolig_webform_get_webform_cid($tree, 'addresse')];
   $member->HomePhone = $v[_egbolig_webform_get_webform_cid($tree, 'phone_nr')];
@@ -140,10 +144,13 @@ function egbolig_webform_populate_member($member, $form_state) {
   $member->Country = DEFAULT_COUNTRY;
   $member->Adults = 1 + $v[_egbolig_webform_get_webform_cid($tree, 'has_partner')][0]; //with or without the partner
 
+  if (empty($v[_egbolig_webform_get_webform_cid($tree, 'has_children')][0])) {
+    $member->Children = 0;
+  }
   $member->Education = $v[_egbolig_webform_get_webform_cid($tree, 'education_name')];
-  $member->EducationStart = date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_start_date')])));
-  $member->EducationEnd = date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')])));
-  $member->EducationExpectedEnd = date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')])));
+  $member->EducationStart = !empty($v[_egbolig_webform_get_webform_cid($tree, 'education_start_date')]) ? date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_start_date')]))) : null;
+  $member->EducationEnd = !empty($v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]) ? date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]))) : null;
+  $member->EducationExpectedEnd = !empty($v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]) ? date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]))) : null;
   $member->EducationDocumentationReceived = ($v[_egbolig_webform_get_webform_cid($tree, 'education_doc')] > 0); //TODO: not working with WS
   $member->EducationalInstitution = $v[_egbolig_webform_get_webform_cid($tree, 'institution_name')];
   $member->MaximumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_max')];
@@ -205,14 +212,19 @@ function _egbolig_webform_ws_update_partner($member, $form_state) {
   $v = $form_state['values']['submitted'];
   $tree = $form_state['webform']['component_tree']['children'];
   if ((int)$v[_egbolig_webform_get_webform_cid($tree, 'has_partner')][0]){
-    $member->Cpr62 = substr($v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')], 0, 6);
-    $member->Cpr42 = substr($v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')], -4);
-
+    $partner_cpr = $v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')];
+    $member->Cpr62 = substr($partner_cpr, 0, 6);
+    $member->Cpr42 = substr($partner_cpr, -4);
+    $partner_name = "";
+    if (module_exists('vcv_serviceplatformen')) {
+      $partner = vcv_serviceplatformen_get_address($partner_cpr);
+      $partner_name = $partner['name'];
+    }
     $client = new SoapClient(variable_get('soap_webservice'));
     $partner_array = array(
       'memberCompanyNo' => $member->MemberCompanyNo,
       'memberNo' => $member->MemberNo,
-      'name' => $member->Name,
+      'name' => $partner_name,
       'cpr62' => substr($member->Cpr62, 0, 6),
       'cpr42' => substr($member->Cpr42, -4),
     );
@@ -350,21 +362,25 @@ function egbolig_webform_ws_add_wishes($member, $form_state) {
 
       $departments_array = array(
         'regionNo' => $regionNo
-      );
-      $response = $client->DepartmentGetListByRegion($departments_array);
-      foreach ($response->DepartmentGetListByRegionResult->Department as $key => $department) {
-        for ($j = $minRoom; $j <= $maxRoom; $j++) {
-          $wishes[] = array(
-            'CompanyNo' => $department->CompanyNo,
-            'MemberCompanyNo' => $member->MemberCompanyNo,
-            'DepartmentNo' => $department->DepartmentNo,
-            'Room' => $j,
-            'MemberNo' => $member->MemberNo,
-            'TenancyType' => 1
-          );
-        }
-      }
-    }
+     );
+     $response = $client->DepartmentGetListByRegion($departments_array);
+     foreach ($response->DepartmentGetListByRegionResult->Department as $key => $department) {
+       for ($j=$minRoom; $j<=$maxRoom; $j++ ) {
+         $wishes[] = array(
+          'CompanyNo' => $department->CompanyNo,
+          'MemberCompanyNo' => $member->MemberCompanyNo,
+          'DepartmentNo' => $department->DepartmentNo,
+          'Room' => $j,
+          'FloorMax' => DEFAULT_MAX_FLOOR,
+          'FloorMix' => DEFAULT_MIN_FLOOR,
+          'SqmMax' => DEFAULT_MAX_SQM,
+          'SqmMin' => DEFAULT_MIN_SQM,
+          'MemberNo' => $member->MemberNo,
+          'TenancyType' => 1
+         );
+       }
+     }
+   }
   }
   $wish_response = $client->WishAddList(array(
       'wishes' => $wishes
