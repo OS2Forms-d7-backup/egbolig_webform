@@ -109,7 +109,8 @@ function egbolig_webform_ws_add_children($member, $form_state) {
       );
       $response = $client->ChildAdd(
         array(
-          'child' => $child)
+          'child' => $child
+        )
       );
     }
   }
@@ -134,7 +135,7 @@ function egbolig_webform_populate_member($member, $form_state) {
     $member->CprNo = $v[_egbolig_webform_get_webform_cid($tree, 'cpr')];
     $member->MemberNo = $v[_egbolig_webform_get_webform_cid($tree, 'cpr')];
   }
-  $member->Email =  $v[_egbolig_webform_get_webform_cid($tree, 'email')];
+  $member->Email = $v[_egbolig_webform_get_webform_cid($tree, 'email')];
   $member->Name = $v[_egbolig_webform_get_webform_cid($tree, 'name')];
   $member->Address = $v[_egbolig_webform_get_webform_cid($tree, 'addresse')];
   $member->HomePhone = $v[_egbolig_webform_get_webform_cid($tree, 'phone_nr')];
@@ -148,9 +149,9 @@ function egbolig_webform_populate_member($member, $form_state) {
     $member->Children = 0;
   }
   $member->Education = $v[_egbolig_webform_get_webform_cid($tree, 'education_name')];
-  $member->EducationStart = !empty($v[_egbolig_webform_get_webform_cid($tree, 'education_start_date')]) ? date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_start_date')]))) : null;
-  $member->EducationEnd = !empty($v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]) ? date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]))) : null;
-  $member->EducationExpectedEnd = !empty($v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]) ? date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]))) : null;
+  $member->EducationStart = !empty($v[_egbolig_webform_get_webform_cid($tree, 'education_start_date')]) ? date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_start_date')]))) : NULL;
+  $member->EducationEnd = !empty($v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]) ? date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]))) : NULL;
+  $member->EducationExpectedEnd = !empty($v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]) ? date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]))) : NULL;
   $member->EducationDocumentationReceived = ($v[_egbolig_webform_get_webform_cid($tree, 'education_doc')] > 0); //TODO: not working with WS
   $member->EducationalInstitution = $v[_egbolig_webform_get_webform_cid($tree, 'institution_name')];
   $member->MaximumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_max')];
@@ -179,11 +180,14 @@ function education_get_list() {
   foreach ($educations as $education) {
     if (!in_array($education->Id, array(1, 2, 3))) {
       continue;
-    } elseif (strlen($education->Name) == 1) {
+    }
+    elseif (strlen($education->Name) == 1) {
       continue;
-    } elseif ($education->Name == 'æ' || $education->Name == 'ø' || $education->Name == 'å') {
+    }
+    elseif ($education->Name == 'æ' || $education->Name == 'ø' || $education->Name == 'å') {
       continue;
-    } else {
+    }
+    else {
       $edulist[$education->Id] = mb_convert_case($education->Name, MB_CASE_TITLE, "UTF-8");
     }
   }
@@ -211,7 +215,7 @@ function _egbolig_webform_ws_update_education($member) {
 function _egbolig_webform_ws_update_partner($member, $form_state) {
   $v = $form_state['values']['submitted'];
   $tree = $form_state['webform']['component_tree']['children'];
-  if ((int)$v[_egbolig_webform_get_webform_cid($tree, 'has_partner')][0]){
+  if ((int) $v[_egbolig_webform_get_webform_cid($tree, 'has_partner')][0]) {
     $partner_cpr = $v[_egbolig_webform_get_webform_cid($tree, 'parner_cpr_nr')];
     $member->Cpr62 = substr($partner_cpr, 0, 6);
     $member->Cpr42 = substr($partner_cpr, -4);
@@ -229,7 +233,7 @@ function _egbolig_webform_ws_update_partner($member, $form_state) {
       'cpr42' => substr($member->Cpr42, -4),
     );
 
-  $response = $client->MemberUpdatePartner($partner_array);
+    $response = $client->MemberUpdatePartner($partner_array);
   }
 }
 
@@ -246,7 +250,8 @@ function education_places() {
     foreach ($education_places as $place) {
       $placeslist[$place->Id] = $place->Name;
     }
-  } else {
+  }
+  else {
     $placeslist[] = 'Ingen uddannelsessteder';
   }
   return $placeslist;
@@ -271,7 +276,8 @@ function _egbolig_webform_get_webform_cid($tree, $form_key) {
   foreach ($tree as $child) {
     if ($child['form_key'] === $form_key) {
       return $child['cid'];
-    } else {
+    }
+    else {
       if ($child['children']) {
         $cid = _egbolig_webform_get_webform_cid($child['children'], $form_key);
         if ($cid) {
@@ -305,13 +311,18 @@ function profession_get_list() {
 function _egbolig_webform_get_children_by_member($memberNo, $companyNo) {
   $childrenList = array();
   $client = new SoapClient(variable_get('soap_webservice'));
-  $children = $client->ChildGetByMember(array('companyNo' => $companyNo, 'memberNo' => $memberNo))->ChildGetByMemberResult->Child;
+  $children = $client->ChildGetByMember(array(
+    'companyNo' => $companyNo,
+    'memberNo' => $memberNo
+  ))->ChildGetByMemberResult->Child;
   if (is_array($children)) {
     foreach ($children as $child) {
       $childrenList[] = array('Cpr6' => $child->Cpr6, 'Cpr4' => $child->Cpr4);
     }
-  } else
+  }
+  else {
     $childrenList[] = array('Cpr6' => $children->Cpr6, 'Cpr4' => $children->Cpr4);
+  }
 
   return $childrenList;
 }
@@ -322,8 +333,9 @@ function _egbolig_webform_get_children_by_member($memberNo, $companyNo) {
 
 function egbolig_webform_is_child_exists($child_cpr, $childrenList) {
   foreach ($childrenList as $child) {
-    if ($child['Cpr4'] == substr($child_cpr, -4) && $child['Cpr6'] == substr($child_cpr, 0, 6))
+    if ($child['Cpr4'] == substr($child_cpr, -4) && $child['Cpr6'] == substr($child_cpr, 0, 6)) {
       return TRUE;
+    }
   }
   return FALSE;
 }
@@ -362,25 +374,25 @@ function egbolig_webform_ws_add_wishes($member, $form_state) {
 
       $departments_array = array(
         'regionNo' => $regionNo
-     );
-     $response = $client->DepartmentGetListByRegion($departments_array);
-     foreach ($response->DepartmentGetListByRegionResult->Department as $key => $department) {
-       for ($j=$minRoom; $j<=$maxRoom; $j++ ) {
-         $wishes[] = array(
-          'CompanyNo' => $department->CompanyNo,
-          'MemberCompanyNo' => $member->MemberCompanyNo,
-          'DepartmentNo' => $department->DepartmentNo,
-          'Room' => $j,
-          'FloorMax' => DEFAULT_MAX_FLOOR,
-          'FloorMix' => DEFAULT_MIN_FLOOR,
-          'SqmMax' => DEFAULT_MAX_SQM,
-          'SqmMin' => DEFAULT_MIN_SQM,
-          'MemberNo' => $member->MemberNo,
-          'TenancyType' => 1
-         );
-       }
-     }
-   }
+      );
+      $response = $client->DepartmentGetListByRegion($departments_array);
+      foreach ($response->DepartmentGetListByRegionResult->Department as $key => $department) {
+        for ($j = $minRoom; $j <= $maxRoom; $j++) {
+          $wishes[] = array(
+            'CompanyNo' => $department->CompanyNo,
+            'MemberCompanyNo' => $member->MemberCompanyNo,
+            'DepartmentNo' => $department->DepartmentNo,
+            'Room' => $j,
+            'FloorMax' => DEFAULT_MAX_FLOOR,
+            'FloorMix' => DEFAULT_MIN_FLOOR,
+            'SqmMax' => DEFAULT_MAX_SQM,
+            'SqmMin' => DEFAULT_MIN_SQM,
+            'MemberNo' => $member->MemberNo,
+            'TenancyType' => 1
+          );
+        }
+      }
+    }
   }
   $wish_response = $client->WishAddList(array(
       'wishes' => $wishes
