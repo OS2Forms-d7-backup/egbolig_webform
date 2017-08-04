@@ -174,7 +174,7 @@ function egbolig_webform_synch_submission($form, &$form_state) {
   }
 }
 
-function os2logging_monolog_channel_info() {
+function egbolig_monolog_channel_info() {
   $channels = array();
 
 $my_module_name = basename(__FILE__, '.module');
