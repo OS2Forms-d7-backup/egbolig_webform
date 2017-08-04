@@ -144,7 +144,7 @@ function egbolig_webform_synch_submission($form, &$form_state) {
         egbolig_webform_ws_add_wishes($member, $form_state);
         drupal_set_message('Submission synched');
       } catch (Exception $e) {
-        watchdog('EGBolig Webservice', $e->getMessage(), array(), WATCHDOG_ERROR);
+        watchdog('egbolig_webform', $e->getMessage(), array(), WATCHDOG_ERROR);
         drupal_set_message('Could not synch the submission, see log', 'warning');
       }
     } else {
@@ -168,8 +168,21 @@ function egbolig_webform_synch_submission($form, &$form_state) {
 
       drupal_set_message('Submission created');
     } catch (Exception $e) {
-      watchdog('EGBolig Webservice', $e->getMessage(), array(), WATCHDOG_ERROR);
+      watchdog('egbolig_webform', $e->getMessage(), array(), WATCHDOG_ERROR);
       drupal_set_message('Could not create the submission, see log', 'warning');
     }
   }
+}
+
+function os2logging_monolog_channel_info() {
+  $channels = array();
+
+$my_module_name = basename(__FILE__, '.module');
+  $channels[$my_module_name] = array(
+      'label' => t($my_module_name),
+      'description' => t('The default channel that os2logging messages are routed through.'),
+      'default profile' => '$my_module_name',
+  );
+
+  return $channels;
 }
