@@ -144,7 +144,7 @@ function egbolig_webform_populate_member($member, $form_state) {
   $member->Adults = 1 + $v[_egbolig_webform_get_webform_cid($tree, 'has_partner')][0]; //with or without the partner
 
   if (empty($v[_egbolig_webform_get_webform_cid($tree, 'has_children')][0])) {
-    $member->Children = null;
+    $member->Children = 0;
   }
   $member->Education = $v[_egbolig_webform_get_webform_cid($tree, 'education_name')];
   $member->EducationStart = !empty($v[_egbolig_webform_get_webform_cid($tree, 'education_start_date')]) ? date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_start_date')]))) : NULL;
