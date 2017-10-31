@@ -384,7 +384,7 @@ function egbolig_webform_ws_add_wishes($member, $form_state) {
             'DepartmentNo' => $department->DepartmentNo,
             'Room' => $j,
             'FloorMax' => DEFAULT_MAX_FLOOR,
-            'FloorMix' => DEFAULT_MIN_FLOOR,
+            'FloorMin' => DEFAULT_MIN_FLOOR,
             'SqmMax' => DEFAULT_MAX_SQM,
             'SqmMin' => DEFAULT_MIN_SQM,
             'MemberNo' => $member->MemberNo,
