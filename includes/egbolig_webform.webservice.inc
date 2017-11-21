@@ -11,6 +11,8 @@ define('DEFAULT_STATUS', 0);
 define('DEFAULT_TENANCY_TYPE', 1);
 define('DEFAULT_TYPE_UPDATE', 'I');
 define('DEFAULT_TYPE_CREATE', 'A');
+define('DEFAULT_MIN_FLOOR', 1);
+define('DEFAULT_MAX_FLOOR', 99);
 define('DEFAULT_MIN_SQM', 1);
 define('DEFAULT_MAX_SQM', 9999);
 
@@ -346,6 +348,8 @@ function egbolig_webform_ws_add_wishes($member, $form_state) {
   $v = $form_state['values']['submitted'];
   $tree = $form_state['webform']['component_tree']['children'];
   $client = new SoapClient(variable_get('soap_webservice'));
+  $minRoom = (int) $v[_egbolig_webform_get_webform_cid($tree, 'antal_rum_min')];
+  $maxRoom = (int) $v[_egbolig_webform_get_webform_cid($tree, 'antal_rum_max')];
   $wishes = array();
   //delete all wishes before add
 
@@ -373,15 +377,20 @@ function egbolig_webform_ws_add_wishes($member, $form_state) {
       );
       $response = $client->DepartmentGetListByRegion($departments_array);
       foreach ($response->DepartmentGetListByRegionResult->Department as $key => $department) {
-        $wishes[] = array(
-          'CompanyNo' => $department->CompanyNo,
-          'MemberCompanyNo' => $member->MemberCompanyNo,
-          'DepartmentNo' => $department->DepartmentNo,
-          'SqmMax' => DEFAULT_MAX_SQM,
-          'SqmMin' => DEFAULT_MIN_SQM,
-          'MemberNo' => $member->MemberNo,
-          'TenancyType' => 1
-        );
+       for ($j = $minRoom; $j <= $maxRoom; $j++) {
+          $wishes[] = array(
+            'CompanyNo' => $department->CompanyNo,
+            'MemberCompanyNo' => $member->MemberCompanyNo,
+            'DepartmentNo' => $department->DepartmentNo,
+            'Room' => $j,
+            'FloorMax' => DEFAULT_MAX_FLOOR,
+            'FloorMin' => DEFAULT_MIN_FLOOR,
+            'SqmMax' => DEFAULT_MAX_SQM,
+            'SqmMin' => DEFAULT_MIN_SQM,
+            'MemberNo' => $member->MemberNo,
+            'TenancyType' => 1
+          );
+        }
       }
     }
   }
