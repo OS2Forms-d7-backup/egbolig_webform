@@ -74,8 +74,6 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
           $message = _drupal_nemid_login_verify();
           if ($message['status']) {
             $cpr = $message['cpr'];
-            //making sure we are not getting the Nemid module again
-            unset($_POST['response']);
           }
         }
       }
@@ -121,6 +119,11 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
 
           $form['submitted']['row7']['col71']['agrements']['is_confirmed'][1]['#default_value'] = true;
           $form['submitted']['row9']['col81']['tro_og_love_erklaering']['jeg_giver_herved_tro_og_love_erklaering_paa'][1]['#default_value'] = true;
+
+          //making sure we Nemid values are not overriding the values received from egbolig
+          if (module_exists('drupal_nemid_login')) {
+            unset($_POST['response']);
+          }
          }
       } else {
         $form['submitted']['row0']['col0']['previous_submission_message']['#prefix'] = '<div id="js-previous-submission-message">';
