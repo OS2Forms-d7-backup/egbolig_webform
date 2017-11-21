@@ -69,6 +69,17 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
       $form['#attached']['js'][] = drupal_get_path('module', 'egbolig_webform') . '/js/egbolig_webform.js';
       $cpr = $_GET['cpr'];
 
+      if (!$cpr) {
+        if (module_exists('drupal_nemid_login')) {
+          $message = _drupal_nemid_login_verify();
+          if ($message['status']) {
+            $cpr = $message['cpr'];
+            //making sure we are not getting the Nemid module again
+            unset($_POST['response']);
+          }
+        }
+      }
+
       if ($cpr) {
         //TODO: add security check that this user can access this CPR submitted data
         $member = egbolig_webform_ws_get_member_by_cpr($cpr);

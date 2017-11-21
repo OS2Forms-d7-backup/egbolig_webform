@@ -227,8 +227,8 @@ function _egbolig_webform_ws_update_partner($member, $form_state) {
       'memberCompanyNo' => $member->MemberCompanyNo,
       'memberNo' => $member->MemberNo,
       'name' => $partner_name,
-      'cpr62' => substr($member->Cpr62, 0, 6),
-      'cpr42' => substr($member->Cpr42, -4),
+      'cpr62' => $member->Cpr62,
+      'cpr42' => $member->Cpr42
     );
 
     $response = $client->MemberUpdatePartner($partner_array);
