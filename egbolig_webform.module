@@ -7,6 +7,7 @@
 include_once 'egbolig_webform.features.inc';
 
 module_load_include('inc', 'egbolig_webform', 'includes/egbolig_webform.webservice');
+module_load_include('inc', 'egbolig_webform', 'includes/egbolig_webform.utils');
 
 /**
  * Implements hook_menu().
@@ -81,6 +82,7 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
       if ($cpr) {
         //TODO: add security check that this user can access this CPR submitted data
         $member = egbolig_webform_ws_get_member_by_cpr($cpr);
+
         if ($member) {
           //saving for integrity
           $childrenList = _egbolig_webform_get_children_by_member($member->MemberNo, $member->MemberCompanyNo);
@@ -120,6 +122,11 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
           $form['submitted']['row7']['col71']['agrements']['is_confirmed'][1]['#default_value'] = true;
           $form['submitted']['row9']['col81']['tro_og_love_erklaering']['jeg_giver_herved_tro_og_love_erklaering_paa'][1]['#default_value'] = true;
 
+          $roomInformation = egbolig_webform_get_wishes_rooms($member);
+
+          $form['submitted']['row6']['col61']['additional_info']['row61']['col62']['antal_rum_min']['#default_value'] = $roomInformation[0];
+          $form['submitted']['row6']['col61']['additional_info']['row61']['col62']['antal_rum_max']['#default_value'] = $roomInformation[1];
+
           //making sure we Nemid values are not overriding the values received from egbolig
           if (module_exists('drupal_nemid_login')) {
             unset($_POST['response']);
@@ -150,11 +157,13 @@ function egbolig_webform_synch_submission($form, &$form_state) {
     if ($form_state['hashcode'] === md5($cpr)) {
       try {
         $member = egbolig_webform_ws_get_member_by_cpr($cpr);
+        egbolig_webform_ws_activate_membership($member);
         $member = egbolig_webform_populate_member($member, $form_state);
         egbolig_webform_ws_update_member($member);
 
         _egbolig_webform_ws_update_partner($member, $form_state);
         egbolig_webform_ws_add_children($member, $form_state);
+        egbolig_webform_ws_delete_wishes($member);
         egbolig_webform_ws_add_wishes($member, $form_state);
         drupal_set_message('Submission synched');
       } catch (Exception $e) {
@@ -178,6 +187,7 @@ function egbolig_webform_synch_submission($form, &$form_state) {
       egbolig_webform_ws_update_member($member);
       _egbolig_webform_ws_update_partner($member, $form_state);
       egbolig_webform_ws_add_children($member, $form_state);
+      egbolig_webform_ws_delete_wishes($member);
       egbolig_webform_ws_add_wishes($member, $form_state);
 
       drupal_set_message('Submission created');

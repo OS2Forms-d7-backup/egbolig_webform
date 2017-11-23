@@ -16,13 +16,24 @@ define('DEFAULT_MAX_FLOOR', 99);
 define('DEFAULT_MIN_SQM', 1);
 define('DEFAULT_MAX_SQM', 9999);
 
+function egbolig_webform_ws_get_client() {
+  $client = &drupal_static(__FUNCTION__);
+
+  if (!isset($client)) {
+    $client = new SoapClient(variable_get('soap_webservice'));
+  }
+
+  return $client;
+}
+
+
 /**
  * Gets a member object from the webservice based on CPR
  *
  * @return member object, or null if no member is found
  */
 function egbolig_webform_ws_get_member_by_cpr($cpr) {
-  $client = new SoapClient(variable_get('soap_webservice'));
+  $client = egbolig_webform_ws_get_client();
   $response = $client->MemberGetListByCprNo(
     array(
       'cprNo' => $cpr
@@ -41,7 +52,7 @@ function egbolig_webform_ws_get_member_by_cpr($cpr) {
 function egbolig_webform_ws_create_member($member) {
   $member->Type = DEFAULT_TYPE_CREATE;
 
-  $client = new SoapClient(variable_get('soap_webservice'));
+  $client = egbolig_webform_ws_get_client();
   $response = $client->PaymentNewMember(
     [
       'paymentDetails' => [
@@ -70,7 +81,7 @@ function egbolig_webform_ws_update_member($member) {
   //unsetting the EdgiNo, this sabotages the submission
   unset($member_array['EgdiNo']);
 
-  $client = new SoapClient(variable_get('soap_webservice'));
+  $client = egbolig_webform_ws_get_client();
 
   //update member
   $response = $client->MemberUpdate(
@@ -96,7 +107,7 @@ function egbolig_webform_ws_add_children($member, $form_state) {
   $v = $form_state['values']['submitted'];
   $tree = $form_state['webform']['component_tree']['children'];
   $childrenList = _egbolig_webform_get_children_by_member($member->MemberNo, $member->MemberCompanyNo);
-  $client = new SoapClient(variable_get('soap_webservice'));
+  $client = egbolig_webform_ws_get_client();
   for ($i = 1; $i <= 10; $i++) {
     $child_cpr = $v[_egbolig_webform_get_webform_cid($tree, 'child_cpr_nr_' . (string) $i)];
     if (!empty($child_cpr) && !egbolig_webform_is_child_exists($child_cpr, $childrenList)) {
@@ -117,63 +128,12 @@ function egbolig_webform_ws_add_children($member, $form_state) {
 }
 
 /**
- * Populates the member object with the values from the form submission.
- * Note: $member param is nullable. In this case a new member class instance is created with the default settings.
- *
- * @return populated member object
- */
-function egbolig_webform_populate_member($member, $form_state) {
-  $v = $form_state['values']['submitted'];
-  $tree = $form_state['webform']['component_tree']['children'];
-
-  //check if member is empty, create a new member and populate some default fields
-  if ($member == NULL) {
-    $member = new stdClass();
-    //TODO: check default fields
-    $member->Password = DEFAULT_PASSWORD;
-    $member->OfferByEmail = DEFAULT_OFFER_BY_EMAIL;
-    $member->CprNo = $v[_egbolig_webform_get_webform_cid($tree, 'cpr')];
-    $member->MemberNo = $v[_egbolig_webform_get_webform_cid($tree, 'cpr')];
-  }
-  $member->Email = $v[_egbolig_webform_get_webform_cid($tree, 'email')];
-  $member->Name = $v[_egbolig_webform_get_webform_cid($tree, 'name')];
-  $member->Address = $v[_egbolig_webform_get_webform_cid($tree, 'addresse')];
-  $member->HomePhone = $v[_egbolig_webform_get_webform_cid($tree, 'phone_nr')];
-  $member->CoAddress = $v[_egbolig_webform_get_webform_cid($tree, 'c_o_addresse')];
-  $member->MobilePhone = $v[_egbolig_webform_get_webform_cid($tree, 'telefonnummer_mobil')];
-  $member->PostalCodeCity = $v[_egbolig_webform_get_webform_cid($tree, 'post_nr___by')];
-  $member->Country = DEFAULT_COUNTRY;
-  $member->Adults = 1 + $v[_egbolig_webform_get_webform_cid($tree, 'has_partner')][0]; //with or without the partner
-
-  if (empty($v[_egbolig_webform_get_webform_cid($tree, 'has_children')][0])) {
-    $member->Children = 0;
-  }
-  $member->Education = $v[_egbolig_webform_get_webform_cid($tree, 'education_name')];
-  $member->EducationStart = !empty($v[_egbolig_webform_get_webform_cid($tree, 'education_start_date')]) ? date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_start_date')]))) : NULL;
-  $member->EducationEnd = !empty($v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]) ? date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]))) : NULL;
-  $member->EducationExpectedEnd = !empty($v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]) ? date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]))) : NULL;
-  $member->EducationDocumentationReceived = ($v[_egbolig_webform_get_webform_cid($tree, 'education_doc')] > 0); //TODO: not working with WS
-  $member->EducationalInstitution = $v[_egbolig_webform_get_webform_cid($tree, 'institution_name')];
-  $member->MaximumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_max')];
-  $member->Pet = $v[_egbolig_webform_get_webform_cid($tree, 'husdyr')];
-  $member->Criteria1 = $v[_egbolig_webform_get_webform_cid($tree, 'status')];
-  if ($v[_egbolig_webform_get_webform_cid($tree, 'status')] == 11) {
-    $member->Criteria2 = $v[_egbolig_webform_get_webform_cid($tree, 'arsog')];
-  }
-
-
-  //$member->Pet TODO: fix the Pets list
-
-  return $member;
-}
-
-/**
  * Returns a list of educations from webservice
  *
  * @return array of educations
  */
 function education_get_list() {
-  $client = new SoapClient(variable_get('soap_webservice'));
+  $client = egbolig_webform_ws_get_client();
   $educations = $client->EducationGetList()->EducationGetListResult->Education;
   $edulist = array();
 
@@ -200,7 +160,7 @@ function education_get_list() {
  *
  */
 function _egbolig_webform_ws_update_education($member) {
-  $client = new SoapClient(variable_get('soap_webservice'));
+  $client = egbolig_webform_ws_get_client();
   $response = $client->MemberUpdateEducation(
     array(
       'member' => $member,
@@ -224,7 +184,7 @@ function _egbolig_webform_ws_update_partner($member, $form_state) {
       $partner = vcv_serviceplatformen_get_address($partner_cpr);
       $partner_name = $partner['name'];
     }
-    $client = new SoapClient(variable_get('soap_webservice'));
+    $client = egbolig_webform_ws_get_client();
     $partner_array = array(
       'memberCompanyNo' => $member->MemberCompanyNo,
       'memberNo' => $member->MemberNo,
@@ -244,7 +204,7 @@ function _egbolig_webform_ws_update_partner($member, $form_state) {
  */
 function education_places() {
   $placeslist = array();
-  $client = new SoapClient(variable_get('soap_webservice'));
+  $client = egbolig_webform_ws_get_client();
   $education_places = $client->EducationalInstitutionGetList()->EducationalInstitutionGetListResult->EducationalInstitution;
   if (count($education_places) > 0) {
     foreach ($education_places as $place) {
@@ -264,28 +224,12 @@ function education_places() {
  */
 function accommodation_types() {
   $accommodationlist = array();
-  $client = new SoapClient(variable_get('soap_webservice'));
+  $client = egbolig_webform_ws_get_client();
   $apartment_types = $client->TenancyTypeGetList()->TenancyTypeGetListResult->TenancyType;
   foreach ($apartment_types as $type) {
     $accommodationlist[] = $type->Text;
   }
   return $accommodationlist;
-}
-
-function _egbolig_webform_get_webform_cid($tree, $form_key) {
-  foreach ($tree as $child) {
-    if ($child['form_key'] === $form_key) {
-      return $child['cid'];
-    }
-    else {
-      if ($child['children']) {
-        $cid = _egbolig_webform_get_webform_cid($child['children'], $form_key);
-        if ($cid) {
-          return $cid;
-        }
-      }
-    }
-  }
 }
 
 /**
@@ -295,7 +239,7 @@ function _egbolig_webform_get_webform_cid($tree, $form_key) {
  */
 function profession_get_list() {
   $professionList = array();
-  $client = new SoapClient(variable_get('soap_webservice'));
+  $client = egbolig_webform_ws_get_client();
   $professions = $client->ProfessionGetList()->ProfessionGetListResult->Profession;
   foreach ($professions as $prof) {
     $professionList[$prof->Id] = $prof->Name;
@@ -310,7 +254,7 @@ function profession_get_list() {
  */
 function _egbolig_webform_get_children_by_member($memberNo, $companyNo) {
   $childrenList = array();
-  $client = new SoapClient(variable_get('soap_webservice'));
+  $client = egbolig_webform_ws_get_client();
   $children = $client->ChildGetByMember(array(
     'companyNo' => $companyNo,
     'memberNo' => $memberNo
@@ -327,19 +271,6 @@ function _egbolig_webform_get_children_by_member($memberNo, $companyNo) {
   return $childrenList;
 }
 
-/*
- * checks if child added to the member
- */
-
-function egbolig_webform_is_child_exists($child_cpr, $childrenList) {
-  foreach ($childrenList as $child) {
-    if ($child['Cpr4'] == substr($child_cpr, -4) && $child['Cpr6'] == substr($child_cpr, 0, 6)) {
-      return TRUE;
-    }
-  }
-  return FALSE;
-}
-
 /**
  * Added wishes
  *
@@ -347,7 +278,7 @@ function egbolig_webform_is_child_exists($child_cpr, $childrenList) {
 function egbolig_webform_ws_add_wishes($member, $form_state) {
   $v = $form_state['values']['submitted'];
   $tree = $form_state['webform']['component_tree']['children'];
-  $client = new SoapClient(variable_get('soap_webservice'));
+  $client = egbolig_webform_ws_get_client();
   $minRoom = (int) $v[_egbolig_webform_get_webform_cid($tree, 'antal_rum_min')];
   $maxRoom = (int) $v[_egbolig_webform_get_webform_cid($tree, 'antal_rum_max')];
   $wishes = array();
@@ -388,7 +319,7 @@ function egbolig_webform_ws_add_wishes($member, $form_state) {
             'SqmMax' => DEFAULT_MAX_SQM,
             'SqmMin' => DEFAULT_MIN_SQM,
             'MemberNo' => $member->MemberNo,
-            'TenancyType' => 1
+            'TenancyType' => DEFAULT_TENANCY_TYPE
           );
         }
       }
@@ -398,4 +329,76 @@ function egbolig_webform_ws_add_wishes($member, $form_state) {
       'wishes' => $wishes
     )
   );
+}
+
+/**
+ * Call to WishDeleteByMember to delete all member wishes
+ *
+ * @param $member
+ */
+function egbolig_webform_ws_delete_wishes($member) {
+  $client = egbolig_webform_ws_get_client();
+
+  $client->WishDeleteByMember(
+    array(
+      'memberCompanyNo' => $member->MemberCompanyNo,
+      'memberNo' => $member->MemberNo
+    )
+  );
+}
+
+/**
+ * Call to WishGetList
+ *
+ * @param $member
+ */
+function egbolig_webform_get_wishes($member) {
+  $client = egbolig_webform_ws_get_client();
+  $response = $client->WishGetList(
+    array(
+      'memberCompanyNo' => $member->MemberCompanyNo,
+      'memberNo' => $member->MemberNo
+    )
+  );
+
+  $result = $response->WishGetListResult;
+  if (!empty($result)) {
+    return $result->Wish;
+  }
+  return array();
+}
+
+/**
+ * Call to MembershipActivateMembership, if member is inactive (1 = i bero), it will be activated,
+ * if member is already active (0) nothing will be done
+ *
+ * @param $member
+ *
+ */
+function egbolig_webform_ws_activate_membership($member) {
+  $client = egbolig_webform_ws_get_client();
+
+  $response = $client->MembershipGetList(
+    array(
+      'memberCompanyNo' => $member->MemberCompanyNo,
+      'memberNo' => $member->MemberNo
+    )
+  );
+
+  $result = $response->MembershipGetListResult;
+  if ($result) {
+    if ($result->Membership->Status == '1') {
+      $client->MembershipActivateMembership(array(
+          'membership' => array(
+            'CompanyNo' => $result->Membership->MemberCompanyNo,
+            'MemberCompanyNo' => $member->MemberCompanyNo,
+            'MemberNo' => $member->MemberNo,
+            'Status' => 0,
+            'TenancyType' => DEFAULT_TENANCY_TYPE,
+            'WaitListType' => $result->Membership->WaitListType
+          )
+        )
+      );
+    }
+  }
 }
