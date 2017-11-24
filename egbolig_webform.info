@@ -1,7 +1,7 @@
 name = Egbolig webform
 core = 7.x
 package = OS2Forms
-version = 7.x-1.0-beta13
+version = 7.x-1.0-beta14
 project = egbolig_webform
 dependencies[] = accommodation
 dependencies[] = borger_formularer
