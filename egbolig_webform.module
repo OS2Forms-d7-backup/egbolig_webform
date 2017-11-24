@@ -39,48 +39,24 @@ function egbolig_webform_settings() {
   return system_settings_form($form);
 }
 
-function egbolig_webform_get_previous_submission_message($form, $form_state) {
-  global $base_root;
-  $cpr = $form_state['values']['submitted']['row1']['col1']['basic_data']['cpr'];
-
-  $member = egbolig_webform_ws_get_member_by_cpr($cpr);
-
-  $message = '';
-  if ($member) {
-    $edit_url = url($base_root . $form['#action'], array('query' => array('cpr' => $cpr)));
-    $message = "
-    <script>
-        window.location = '$edit_url';
-    </script>";
-
-    drupal_set_message(t('Du har i forvejen en sag. Din sag er blevet hentet ind og du kan rette i den'));
-  }
-  $command = ajax_command_html('#js-previous-submission-message', $message);
-
-  return array('#type' => 'ajax', '#commands' => [$command]);
-}
-
 function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL) {
   //cannot fully use $form_id as it's dependent on node ID
-  $v = $form_state['values']['submitted'];
-  $tree = $form_state['webform']['component_tree']['children'];
   if (strpos($form_id, 'webform_client_form') > -1) {
     if ($form['#node']->type == 'webform' && $form['#node']->title == 'Boligansøgningsformular') {
       $form['#attached']['css'][] = drupal_get_path('module', 'egbolig_webform') . '/css/egbolig_webform.css';
       $form['#attached']['js'][] = drupal_get_path('module', 'egbolig_webform') . '/js/egbolig_webform.js';
-      $cpr = $_GET['cpr'];
 
       if (!$cpr) {
-        if (module_exists('drupal_nemid_login')) {
-          $message = _drupal_nemid_login_verify();
-          if ($message['status']) {
-            $cpr = $message['cpr'];
-          }
+        $message = _drupal_nemid_login_verify();
+        if ($message['status']) {
+          $cpr = $message['cpr'];
         }
       }
 
+      //In order to test a form without NemID uncomment the line below and provide desired CPR
+      //$cpr = '';
+
       if ($cpr) {
-        //TODO: add security check that this user can access this CPR submitted data
         $member = egbolig_webform_ws_get_member_by_cpr($cpr);
 
         if ($member) {
@@ -128,21 +104,8 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
           $form['submitted']['row6']['col61']['additional_info']['row61']['col62']['antal_rum_max']['#default_value'] = $roomInformation[1];
 
           //making sure we Nemid values are not overriding the values received from egbolig
-          if (module_exists('drupal_nemid_login')) {
-            unset($_POST['response']);
-          }
+          unset($_POST['response']);
          }
-      } else {
-        $form['submitted']['row0']['col0']['previous_submission_message']['#prefix'] = '<div id="js-previous-submission-message">';
-        $form['submitted']['row0']['col0']['previous_submission_message']['#suffix'] = '</div>';
-
-        //adding ajax listener to CPR field
-        $form['submitted']['row1']['col1']['basic_data']['cpr']['#ajax'] = array(
-          'event' => 'blur',
-          'callback' => 'egbolig_webform_get_previous_submission_message',
-          'effect' => 'fade',
-          'progress' => array('type' => 'none')
-        );
       }
 
       $form['#submit'][] = 'egbolig_webform_synch_submission';
@@ -151,49 +114,52 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
 }
 
 function egbolig_webform_synch_submission($form, &$form_state) {
-  $cpr = $form_state['values']['submitted'][_egbolig_webform_get_webform_cid($form_state['webform']['component_tree']['children'], 'cpr')];
-  //updating submission
-  if (isset($form_state['hashcode'])) {
-    if ($form_state['hashcode'] === md5($cpr)) {
+  $message = _drupal_nemid_login_verify();
+  if ($message['status']) {
+    $cpr = $message['cpr'];
+
+    //updating submission
+    if (isset($form_state['hashcode'])) {
+      if ($form_state['hashcode'] === md5($cpr)) {
+        try {
+          $member = egbolig_webform_ws_get_member_by_cpr($cpr);
+          egbolig_webform_ws_activate_membership($member);
+          $member = egbolig_webform_populate_member($member, $form_state);
+          egbolig_webform_ws_update_member($member);
+
+          _egbolig_webform_ws_update_partner($member, $form_state);
+          egbolig_webform_ws_add_children($member, $form_state);
+          egbolig_webform_ws_delete_wishes($member);
+          egbolig_webform_ws_add_wishes($member, $form_state);
+          drupal_set_message('Submission synched');
+        } catch (Exception $e) {
+          watchdog('egbolig_webform', $e->getMessage(), array(), WATCHDOG_ERROR);
+          drupal_set_message('Could not synch the submission, see log', 'warning');
+        }
+      } else {
+        drupal_set_message(t('Integrity of the form is broken'), 'error');
+      }
+    }
+    // new submission
+    else {
       try {
+        $member = egbolig_webform_populate_member(NULL, $form_state);
+        egbolig_webform_ws_create_member($member);
+
+        //getting the member and updating if with the
         $member = egbolig_webform_ws_get_member_by_cpr($cpr);
-        egbolig_webform_ws_activate_membership($member);
         $member = egbolig_webform_populate_member($member, $form_state);
         egbolig_webform_ws_update_member($member);
-
         _egbolig_webform_ws_update_partner($member, $form_state);
         egbolig_webform_ws_add_children($member, $form_state);
         egbolig_webform_ws_delete_wishes($member);
         egbolig_webform_ws_add_wishes($member, $form_state);
-        drupal_set_message('Submission synched');
+
+        drupal_set_message('Submission created');
       } catch (Exception $e) {
         watchdog('egbolig_webform', $e->getMessage(), array(), WATCHDOG_ERROR);
-        drupal_set_message('Could not synch the submission, see log', 'warning');
+        drupal_set_message('Could not create the submission, see log', 'warning');
       }
-    } else {
-      //TODO: abort submission
-      drupal_set_message(t('Integrity of the form is broken'), 'error');
-    }
-  }
-  // new submission
-  else {
-    try {
-      $member = egbolig_webform_populate_member(NULL, $form_state);
-      egbolig_webform_ws_create_member($member);
-
-      //getting the member and updating if with the
-      $member = egbolig_webform_ws_get_member_by_cpr($cpr);
-      $member = egbolig_webform_populate_member($member, $form_state);
-      egbolig_webform_ws_update_member($member);
-      _egbolig_webform_ws_update_partner($member, $form_state);
-      egbolig_webform_ws_add_children($member, $form_state);
-      egbolig_webform_ws_delete_wishes($member);
-      egbolig_webform_ws_add_wishes($member, $form_state);
-
-      drupal_set_message('Submission created');
-    } catch (Exception $e) {
-      watchdog('egbolig_webform', $e->getMessage(), array(), WATCHDOG_ERROR);
-      drupal_set_message('Could not create the submission, see log', 'warning');
     }
   }
 }
@@ -201,7 +167,7 @@ function egbolig_webform_synch_submission($form, &$form_state) {
 function egbolig_webform_monolog_channel_info() {
   $channels = array();
 
-$my_module_name = basename(__FILE__, '.module');
+  $my_module_name = basename(__FILE__, '.module');
   $channels[$my_module_name] = array(
       'label' => t($my_module_name),
       'description' => t('The default channel that os2logging messages are routed through.'),
