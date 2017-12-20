@@ -32,12 +32,15 @@ function egbolig_webform_populate_member($member, $form_state) {
   if (empty($v[_egbolig_webform_get_webform_cid($tree, 'has_children')][0])) {
     $member->Children = 0;
   }
-  $member->Education = $v[_egbolig_webform_get_webform_cid($tree, 'education_name')];
+  $education_name_cid = _egbolig_webform_get_webform_cid($tree, 'education_name');
+  $member->Education = isset($v[$education_name_cid])? $v[$education_name_cid] : NULL;
   $member->EducationStart = !empty($v[_egbolig_webform_get_webform_cid($tree, 'education_start_date')]) ? date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_start_date')]))) : NULL;
   $member->EducationEnd = !empty($v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]) ? date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]))) : NULL;
   $member->EducationExpectedEnd = !empty($v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]) ? date("Y-m-d", strtotime(str_replace('/', '.', $v[_egbolig_webform_get_webform_cid($tree, 'education_end_date')]))) : NULL;
-  $member->EducationDocumentationReceived = ($v[_egbolig_webform_get_webform_cid($tree, 'education_doc')] > 0); //TODO: not working with WS
-  $member->EducationalInstitution = $v[_egbolig_webform_get_webform_cid($tree, 'institution_name')];
+  $education_documentation_received_cid = _egbolig_webform_get_webform_cid($tree, 'education_doc');
+  $member->EducationDocumentationReceived = isset($v[$education_documentation_received_cid])? ($v[$education_documentation_received_cid] > 0) : FALSE; //TODO: not working with WS
+  $educational_institution_cid = _egbolig_webform_get_webform_cid($tree, 'institution_name');
+  $member->EducationalInstitution = isset($v[$educational_institution_cid])? $v[$educational_institution_cid] : NULL;
   $member->MaximumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_max')];
   $member->Pet = $v[_egbolig_webform_get_webform_cid($tree, 'husdyr')];
   $member->Criteria1 = $v[_egbolig_webform_get_webform_cid($tree, 'status')];
@@ -61,6 +64,20 @@ function egbolig_webform_is_child_exists($child_cpr, $childrenList) {
     }
   }
   return FALSE;
+}
+
+/**
+ * remove child from the children lit
+ */
+function egbolig_webform_remove_child_from_list($child_cpr, &$childrenList) {
+  for ($i = 0; $i <= count($childrenList); $i++) {
+    if ($childrenList[$i]['Cpr4'] == substr($child_cpr, -4) && $childrenList[$i]['Cpr6'] == substr($child_cpr, 0, 6)) {
+      unset($childrenList[$i]);
+      break;
+    }
+  }
+
+  reset($childrenList);
 }
 
 /**
@@ -103,7 +120,7 @@ function _egbolig_webform_get_webform_cid($tree, $form_key) {
       return $child['cid'];
     }
     else {
-      if ($child['children']) {
+      if (isset($child['children'])) {
         $cid = _egbolig_webform_get_webform_cid($child['children'], $form_key);
         if ($cid) {
           return $cid;
@@ -113,3 +130,13 @@ function _egbolig_webform_get_webform_cid($tree, $form_key) {
   }
 }
 
+/**
+ * This function will return the number as string with the desired legth.
+ * It is useful since EGBolig is cutting the numbers starting with zeros.
+ *
+ * @param $number
+ * @param $desired_length
+ */
+function _egbolig_webform_get_number_fixed_length($number, $desired_length) {
+  return sprintf("%'.0" . $desired_length . "d", $number);
+}
