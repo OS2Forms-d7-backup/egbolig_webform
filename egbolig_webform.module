@@ -72,8 +72,8 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
           $form['submitted']['row1']['col2']['telefonnummer_mobil']['#default_value'] = $member->MobilePhone;
           $form['submitted']['row1']['col1']['basic_data']['c_o_addresse']['#default_value'] = $member->CoAddress;
           $form['submitted']['row1']['col1']['basic_data']['post_nr___by']['#default_value'] = $member->PostalCodeCity;
-          $form['submitted']['row1']['col1']['basic_data']['email']['#default_value'] = $member->Email;
-          $form['submitted']['row1']['col2']['status']['#default_value'] = (int) $member->Criteria1;
+          $form['submitted']['row1']['col2']['email']['#default_value'] = $member->Email;
+
           if ($member->Criteria2) {
             $form['submitted']['row4']['col41']['nuvaerende_situation']['row41']['col43']['arsog']['#default_value'] = (int) $member->Criteria2;
           }
@@ -88,6 +88,9 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
             $form['submitted']['row1']['col2']['partner']['has_partner'][1]['#default_value'] = 1;
             $form['submitted']['row1']['col2']['partner']['parner_cpr_nr']['#default_value'] = $member->Cpr62 . $member->Cpr42;
           }
+
+          $form['submitted']['row2']['col21']['more_info']['status']['#default_value'] = (int) $member->Criteria1;
+
           $form['submitted']['row3']['col31']['under_education']['row31']['col32']['institution_name']['#default_value'] = $member->EducationalInstitution;
           $form['submitted']['row3']['col31']['under_education']['row31']['col32']['education_name']['#default_value'] = $member->Education;
           $form['submitted']['row3']['col31']['under_education']['row31']['col33']['education_start_date']['#default_value'] = date('d/m/Y', strtotime($member->EducationStart));
@@ -97,7 +100,7 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
           $form['submitted']['row6']['col61']['additional_info']['row61']['col63']['husdyr']['#default_value'] = $member->Pet;
 
           $form['submitted']['row7']['col71']['agrements']['is_confirmed'][1]['#default_value'] = TRUE;
-          $form['submitted']['row9']['col81']['tro_og_love_erklaering']['jeg_giver_herved_tro_og_love_erklaering_paa'][1]['#default_value'] = TRUE;
+          $form['submitted']['jeg_giver_herved_tro_og_love_erklaering_paa'][1]['#default_value'] = TRUE;
 
           $roomInformation = egbolig_webform_get_wishes_rooms($member);
 
