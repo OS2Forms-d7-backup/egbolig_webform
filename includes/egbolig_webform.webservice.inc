@@ -345,12 +345,13 @@ function egbolig_webform_ws_add_wishes($member, $form_state) {
   $minRoom = (int) $v[_egbolig_webform_get_webform_cid($tree, 'antal_rum_min')];
   $maxRoom = (int) $v[_egbolig_webform_get_webform_cid($tree, 'antal_rum_max')];
   $wishes = array();
-  //delete all wishes before add
 
-  $response = $client->WishDeleteByMember(array(
-    'memberNo' => $member->MemberNo,
-    'memberCompanyNo' => $member->MemberCompanyNo,
-  ));
+  // Already deleted by calling egbolig_webform_ws_delete_wishes prior to this function
+  //delete all wishes before add
+  //$response = $client->WishDeleteByMember(array(
+  //  'memberNo' => $member->MemberNo,
+  //  'memberCompanyNo' => $member->MemberCompanyNo,
+  //));
 
   $submittedRegions = array();
   for ($i = 1; $i <= 4; $i++) {

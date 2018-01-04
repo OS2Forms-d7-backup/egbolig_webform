@@ -57,13 +57,14 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
       //$cpr = '';
 
       if ($cpr) {
+        $form_state['cpr'] = $cpr;
         $member = egbolig_webform_ws_get_member_by_cpr($cpr);
 
         if ($member) {
           //saving for integrity
-          $childrenList = _egbolig_webform_get_children_by_member($member->MemberNo, $member->MemberCompanyNo);
           $form_state['hashcode'] = md5($cpr);
-          $form_state['cpr'] = $cpr;
+
+          $childrenList = _egbolig_webform_get_children_by_member($member->MemberNo, $member->MemberCompanyNo);
           $form['submitted']['row1']['col1']['basic_data']['cpr']['#default_value'] = $cpr;
           $form['submitted']['row1']['col1']['basic_data']['cpr']['#attributes']['readonly'] = 'readonly';
           $form['submitted']['row1']['col1']['basic_data']['name']['#default_value'] = $member->Name;
@@ -106,10 +107,9 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
 
           $form['submitted']['row6']['col61']['additional_info']['row61']['col62']['antal_rum_min']['#default_value'] = $roomInformation[0];
           $form['submitted']['row6']['col61']['additional_info']['row61']['col62']['antal_rum_max']['#default_value'] = $roomInformation[1];
-
-          //making sure we Nemid values are not overriding the values received from egbolig
-          unset($_POST['response']);
         }
+        //making sure we Nemid values are not overriding the values received from egbolig
+        unset($_POST['response']);
       }
 
       $form['#submit'][] = 'egbolig_webform_synch_submission';
