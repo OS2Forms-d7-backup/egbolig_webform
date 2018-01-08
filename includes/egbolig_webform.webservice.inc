@@ -36,7 +36,7 @@ function egbolig_webform_ws_get_member_by_cpr($cpr) {
   $client = egbolig_webform_ws_get_client();
   $response = $client->MemberGetListByCprNo(
     array(
-      'cprNo' => $cpr
+      'cprNo' => $cpr,
     )
   );
   $result = $response->MemberGetListByCprNoResult;
@@ -123,12 +123,22 @@ function egbolig_webform_ws_add_children($member, $form_state) {
 
       if (!empty($child_cpr)) {
         if (!egbolig_webform_is_child_exists($child_cpr, $childrenList)) {
+
+          // Attempting to get a child name
+          $child_name = "";
+          if (module_exists('vcv_serviceplatformen')) {
+            $child = vcv_serviceplatformen_get_address($child_cpr);
+            if (isset($child['name'])) {
+              $child_name = $child['name'];
+            }
+          }
+
           $child = array(
             'CompanyNo' => $member->MemberCompanyNo,
             'Cpr4' => substr($child_cpr, -4),
             'Cpr6' => substr($child_cpr, 0, 6),
             'MemberNo' => $member->MemberNo,
-            'Name' => $member->Name
+            'Name' => $child_name
           );
           $client->ChildAdd(
             array(
@@ -150,7 +160,7 @@ function egbolig_webform_ws_add_children($member, $form_state) {
       'Cpr4' => $child['Cpr4'],
       'Cpr6' => $child['Cpr6'],
       'MemberNo' => $member->MemberNo,
-      'Name' => $member->Name
+      'Name' => $child['Name']
     );
     $client->ChildDelete(
       array(
@@ -317,7 +327,8 @@ function _egbolig_webform_get_children_by_member($memberNo, $companyNo) {
         $childrenList[] = array(
           'AutoNo' => $child->AutoNo,
           'Cpr6' => _egbolig_webform_get_number_fixed_length($child->Cpr6, 6),
-          'Cpr4' => _egbolig_webform_get_number_fixed_length($child->Cpr4, 4)
+          'Cpr4' => _egbolig_webform_get_number_fixed_length($child->Cpr4, 4),
+          'Name' => $child->Name,
         );
       }
     } else {
@@ -325,7 +336,8 @@ function _egbolig_webform_get_children_by_member($memberNo, $companyNo) {
         $childrenList[] = array(
           'AutoNo' => $children->AutoNo,
           'Cpr6' => _egbolig_webform_get_number_fixed_length($children->Cpr6, 6),
-          'Cpr4' => _egbolig_webform_get_number_fixed_length($children->Cpr4, 4)
+          'Cpr4' => _egbolig_webform_get_number_fixed_length($children->Cpr4, 4),
+          'Name' => $children->Name,
         );
       }
     }

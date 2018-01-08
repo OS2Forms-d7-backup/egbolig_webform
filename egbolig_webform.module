@@ -107,9 +107,10 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
 
           $form['submitted']['row6']['col61']['additional_info']['row61']['col62']['antal_rum_min']['#default_value'] = $roomInformation[0];
           $form['submitted']['row6']['col61']['additional_info']['row61']['col62']['antal_rum_max']['#default_value'] = $roomInformation[1];
+
+          //making sure we Nemid values are not overriding the values received from egbolig
+          unset($_POST['response']);
         }
-        //making sure we Nemid values are not overriding the values received from egbolig
-        unset($_POST['response']);
       }
 
       $form['#submit'][] = 'egbolig_webform_synch_submission';
