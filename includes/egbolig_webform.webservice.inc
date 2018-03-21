@@ -463,7 +463,7 @@ function egbolig_webform_ws_activate_membership($member) {
 
   $result = $response->MembershipGetListResult;
   if ($result) {
-    if ($result->Membership->Status == '1') {
+    if ($result->Membership->Status != '0') {
       $client->MembershipActivateMembership(array(
           'membership' => array(
             'CompanyNo' => $result->Membership->MemberCompanyNo,
