@@ -37,6 +37,7 @@ function egbolig_webform_ws_get_member_by_cpr($cpr) {
   $response = $client->MemberGetListByCprNo(
     array(
       'cprNo' => $cpr,
+      'includeDeletedMembers' => 1,
     )
   );
   $result = $response->MemberGetListByCprNoResult;
