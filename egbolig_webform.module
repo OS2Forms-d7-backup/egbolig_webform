@@ -47,7 +47,7 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
       $form['#attached']['js'][] = drupal_get_path('module', 'egbolig_webform') . '/js/egbolig_webform.js';
 
       if (!$cpr) {
-        $message = b();
+        $message = _nemid_login_verify();
         if ($message['status']) {
           $cpr = $message['cpr'];
         }
