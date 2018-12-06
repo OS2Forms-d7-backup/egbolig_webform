@@ -43,7 +43,12 @@ function egbolig_webform_populate_member($member, $form_state) {
   $member->EducationalInstitution = isset($v[$educational_institution_cid])? $v[$educational_institution_cid] : NULL;
   $member->MaximumRent = $v[_egbolig_webform_get_webform_cid($tree, 'husleje_max')];
   $member->Pet = $v[_egbolig_webform_get_webform_cid($tree, 'husdyr')];
-  $member->Criteria1 = $v[_egbolig_webform_get_webform_cid($tree, 'status')];
+  if ($v[_egbolig_webform_get_webform_cid($tree, 'status')] == 15) {
+    $member->Criteria6 = $v[_egbolig_webform_get_webform_cid($tree, 'status')];
+  }
+  else {
+    $member->Criteria1 = $v[_egbolig_webform_get_webform_cid($tree, 'status')];
+  }
   if ($v[_egbolig_webform_get_webform_cid($tree, 'status')] == 11) {
     $member->Criteria2 = $v[_egbolig_webform_get_webform_cid($tree, 'arsog')];
   }
