@@ -59,7 +59,6 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
       if ($cpr) {
         $form_state['cpr'] = $cpr;
         $member = egbolig_webform_ws_get_member_by_cpr($cpr);
-
         if ($member) {
           //saving for integrity
           $form_state['hashcode'] = md5($cpr);
@@ -90,7 +89,7 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
             $form['submitted']['row1']['col2']['partner']['parner_cpr_nr']['#default_value'] = $member->Cpr62 . $member->Cpr42;
           }
           if ($member->Criteria6) {
-            $form['submitted']['row2']['col21']['more_info']['status']['#default_value'] = (int) $member->Criteria1;
+            $form['submitted']['row2']['col21']['more_info']['status']['#default_value'] = (int) $member->Criteria6;
           }
           else {
             $form['submitted']['row2']['col21']['more_info']['status']['#default_value'] = (int) $member->Criteria1;

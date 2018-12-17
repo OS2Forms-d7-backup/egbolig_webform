@@ -45,9 +45,11 @@ function egbolig_webform_populate_member($member, $form_state) {
   $member->Pet = $v[_egbolig_webform_get_webform_cid($tree, 'husdyr')];
   if ($v[_egbolig_webform_get_webform_cid($tree, 'status')] == 15) {
     $member->Criteria6 = $v[_egbolig_webform_get_webform_cid($tree, 'status')];
+    $member->Criteria1 = NULL;
   }
   else {
     $member->Criteria1 = $v[_egbolig_webform_get_webform_cid($tree, 'status')];
+    $member->Criteria6 = NULL;
   }
   if ($v[_egbolig_webform_get_webform_cid($tree, 'status')] == 11) {
     $member->Criteria2 = $v[_egbolig_webform_get_webform_cid($tree, 'arsog')];
