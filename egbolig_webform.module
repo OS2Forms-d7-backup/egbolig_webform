@@ -62,7 +62,6 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
         $message = vcv_serviceplatformen_get_address($cpr);
         $address = $message['road'] . ' ' . $message['road_no'] . ' ' . $message['floor'] . ' ' . $message['door'];
         $postal_code_city = $message['zipcode'] . ' ' . $message['city'];
-        dpm($member);
         if ($member) {
           //saving for integrity
           $form_state['hashcode'] = md5($cpr);
