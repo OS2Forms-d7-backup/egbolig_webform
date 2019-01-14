@@ -59,7 +59,9 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
       if ($cpr) {
         $form_state['cpr'] = $cpr;
         $member = egbolig_webform_ws_get_member_by_cpr($cpr);
-
+        $message = vcv_serviceplatformen_get_address($cpr);
+        $address = $message['road'] . ' ' . $message['road_no'] . ' ' . $message['floor'] . ' ' . $message['door'];
+        $postal_code_city = $message['zipcode'] . ' ' . $message['city'];
         if ($member) {
           //saving for integrity
           $form_state['hashcode'] = md5($cpr);
@@ -69,14 +71,14 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
           $form['submitted']['row1']['col1']['basic_data']['cpr']['#attributes']['readonly'] = 'readonly';
           $form['submitted']['row1']['col1']['basic_data']['name']['#default_value'] = $member->Name;
           $form['submitted']['row1']['col2']['phone_nr']['#default_value'] = $member->HomePhone;
-          $form['submitted']['row1']['col1']['basic_data']['addresse']['#default_value'] = $member->Address;
+          $form['submitted']['row1']['col1']['basic_data']['addresse']['#default_value'] = $address; //$member->Address;
           $form['submitted']['row1']['col2']['telefonnummer_mobil']['#default_value'] = $member->MobilePhone;
           $form['submitted']['row1']['col1']['basic_data']['c_o_addresse']['#default_value'] = $member->CoAddress;
-          $form['submitted']['row1']['col1']['basic_data']['post_nr___by']['#default_value'] = $member->PostalCodeCity;
+          $form['submitted']['row1']['col1']['basic_data']['post_nr___by']['#default_value'] = $postal_code_city; //$member->PostalCodeCity;
           $form['submitted']['row1']['col2']['email']['#default_value'] = $member->Email;
 
           if ($member->Criteria2) {
-            $form['submitted']['row4']['col41']['nuvaerende_situation']['row41']['col43']['arsog']['#default_value'] = (int) $member->Criteria2;
+            $form['submitted']['row4']['col41']['nuvaerende_situation']['row42']['col421']['arsog']['#default_value'] = (int) $member->Criteria2;
           }
           if ($member->Children > 0) {
             $form['submitted']['row2']['col21']['more_info']['has_children'][1]['#default_value'] = TRUE;
