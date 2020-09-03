@@ -69,7 +69,6 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
       if ($cpr) {
         $form_state['cpr'] = $cpr;
         $member = egbolig_webform_ws_get_member_by_cpr($cpr);
-
         $message = vcv_serviceplatformen_get_address($cpr);
         $address = $message['road'] . ' ' . $message['road_no'] . ' ' . $message['floor'] . ' ' . $message['door'];
         $postal_code_city = $message['zipcode'] . ' ' . $message['city'];
