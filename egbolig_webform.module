@@ -65,6 +65,7 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
 
       //In order to test a form without NemID uncomment the line below and provide desired CPR
       //$cpr = '';
+
       if ($cpr) {
         $form_state['cpr'] = $cpr;
         $member = egbolig_webform_ws_get_member_by_cpr($cpr);
