@@ -46,10 +46,20 @@ function egbolig_webform_form_alter(&$form, &$form_state, $form_id, $cpr = NULL)
       $form['#attached']['css'][] = drupal_get_path('module', 'egbolig_webform') . '/css/egbolig_webform.css';
       $form['#attached']['js'][] = drupal_get_path('module', 'egbolig_webform') . '/js/egbolig_webform.js';
 
+      $nemid_login_block_enable = variable_get('nemid_login_block_enable_' . $form['#node']->nid, FALSE);
+      $nemlogin_link_enable = variable_get('nemlogin_link_enable_' . $form['#node']->nid, FALSE);
       if (!$cpr) {
-        $message = _nemid_login_verify();
-        if ($message['status']) {
-          $cpr = $message['cpr'];
+        if ($nemid_login_block_enable) {
+          $message = _nemid_login_verify();
+          if ($message['status']) {
+            $cpr = $message['cpr'];
+          }
+        }
+        if ($nemlogin_link_enable) {
+          $nemlogin_object = nemlogin_get_plugin_object();
+          if ($nemlogin_object->isAuthenticated()) {
+            $cpr = $nemlogin_object->fetchValue('cpr');
+          }
         }
       }
 
